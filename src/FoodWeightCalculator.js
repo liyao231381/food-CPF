@@ -12,9 +12,11 @@ const FoodWeightCalculator = () => {
     const [isAddModalOpen, setIsAddModalOpen] = useState(false);
     const [isEditModalOpen, setIsEditModalOpen] = useState(false);
     const [selectedFood, setSelectedFood] = useState(null);
+    const [isLoading, setIsLoading] = useState(false); // 添加加载状态
 
     useEffect(() => {
         const fetchFoodData = async () => {
+            setIsLoading(true); // 开始加载时设置状态为 true
             try {
                 const response = await fetch('/api/foodData');
                 if (!response.ok) {
@@ -31,49 +33,60 @@ const FoodWeightCalculator = () => {
                 setFoodData(groupedData);
             } catch (error) {
                 console.error("Could not fetch food data:", error);
+                // 可以在这里设置一个错误状态，并在界面上显示错误信息
+            } finally {
+                setIsLoading(false); // 无论成功与否，加载完成后都设置为 false
             }
         };
 
         fetchFoodData();
-    }, [isAddModalOpen, isEditModalOpen]); // 依赖项添加 isAddModalOpen 和 isEditModalOpen
+    }, []); // 移除 isAddModalOpen 和 isEditModalOpen 依赖项
 
     const calculateWeight = () => {
-        const selectedFoodList = foodData[foodType];
-        if (!selectedFoodList) {
-            setResults([{ foodname: '', weight: '未找到该类型的食物数据。' }]);
-            return;
-        }
-
-        if (isNaN(nutrientAmount)) {
-            setResults([{ foodname: '', weight: '请输入有效的营养素需求量。' }]);
-            return;
-        }
-
-        const newResults = selectedFoodList.map(food => {
-            let nutrientContent;
-            switch (foodType) {
-                case "carbon":
-                    nutrientContent = food.carbon;
-                    break;
-                case "protein":
-                    nutrientContent = food.protein;
-                    break;
-                case "fat":
-                    nutrientContent = food.fat;
-                    break;
-                default:
-                    nutrientContent = 0;
+        setIsLoading(true);
+        try {
+            const selectedFoodList = foodData[foodType];
+            if (!selectedFoodList) {
+                setResults([{ foodname: '', weight: '未找到该类型的食物数据。' }]);
+                return;
             }
 
-            let weight = '无法提供';
-            if (nutrientContent > 0) {
-                weight = ((nutrientAmount / nutrientContent) * 100).toFixed(2);
+            if (isNaN(nutrientAmount)) {
+                setResults([{ foodname: '', weight: '请输入有效的营养素需求量。' }]);
+                return;
             }
 
-            return { foodname: food.foodname, weight: weight };
-        });
+            const newResults = selectedFoodList.map(food => {
+                let nutrientContent;
+                switch (foodType) {
+                    case "carbon":
+                        nutrientContent = food.carbon;
+                        break;
+                    case "protein":
+                        nutrientContent = food.protein;
+                        break;
+                    case "fat":
+                        nutrientContent = food.fat;
+                        break;
+                    default:
+                        nutrientContent = 0;
+                }
 
-        setResults(newResults);
+                let weight = '无法提供';
+                if (nutrientContent > 0) {
+                    weight = ((nutrientAmount / nutrientContent) * 100).toFixed(2);
+                }
+
+                return { foodname: food.foodname, weight: weight };
+            });
+
+            setResults(newResults);
+        } catch (error) {
+            console.error("计算重量失败:", error);
+            setResults([{ foodname: '', weight: '计算重量时出错。' }]); // 设置错误信息
+        } finally {
+            setIsLoading(false); // 确保在计算完成后停止加载
+        }
     };
 
     const handleOpenAddModal = () => {
@@ -120,30 +133,44 @@ const FoodWeightCalculator = () => {
             </div>
 
             <div className="button-row">
-                <button className="calculate-button" onClick={calculateWeight}>查询</button>
+                <button className="calculate-button" onClick={calculateWeight} disabled={isLoading}>
+                    {isLoading ? '查询中...' : '查询'}
+                </button>
                 <div className="right-buttons">
                     <button className="add-food-button small-button" onClick={handleOpenAddModal}>添加食材</button>
-                    <button className="edit-food-button small-button" onClick={() => handleOpenEditModal(results[0])}>修改食材</button>
+                    <button
+                        className="edit-food-button small-button"
+                        onClick={() =>
+                            results.length > 0 ? handleOpenEditModal(results[0]) : alert("请先查询结果")
+                        }
+                        disabled={isLoading}
+                    >
+                        修改食材
+                    </button>
                 </div>
             </div>
 
             <h3>计算结果</h3>
-            <table className="result-table">
-                <thead>
-                    <tr>
-                        <th>食材名称</th>
-                        <th>所需重量 (克)</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {results.map((result, index) => (
-                        <tr key={index} onClick={() => handleOpenEditModal(result)}>
-                            <td>{result.foodname}</td>
-                            <td>{result.weight}</td>
+            {isLoading ? (
+                <p>加载中...</p>
+            ) : (
+                <table className="result-table">
+                    <thead>
+                        <tr>
+                            <th>食材名称</th>
+                            <th>所需重量 (克)</th>
                         </tr>
-                    ))}
-                </tbody>
-            </table>
+                    </thead>
+                    <tbody>
+                        {results.map((result, index) => (
+                            <tr key={index} onClick={() => handleOpenEditModal(result)}>
+                                <td>{result.foodname}</td>
+                                <td>{result.weight}</td>
+                            </tr>
+                        ))}
+                    </tbody>
+                </table>
+            )}
 
             <AddFoodModal isOpen={isAddModalOpen} onClose={handleCloseAddModal} />
             <EditFoodModal isOpen={isEditModalOpen} onClose={handleCloseEditModal} selectedFood={selectedFood} />
