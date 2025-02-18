@@ -1,12 +1,37 @@
 // FoodWeightCalculator.js
-import React from 'react';
-import foodData from './foodData'; // 导入 foodData
+import React, { useState, useEffect } from 'react';
 import './FoodWeightCalculator.css';
 
 const FoodWeightCalculator = () => {
-    const [nutrientAmount, setNutrientAmount] = React.useState(50);
-    const [foodType, setFoodType] = React.useState('carbon');
-    const [results, setResults] = React.useState([]);
+    const [nutrientAmount, setNutrientAmount] = useState(50);
+    const [foodType, setFoodType] = useState('carbon');
+    const [results, setResults] = useState([]);
+    const [foodData, setFoodData] = useState({ carbon: [], protein: [], fat: [] }); // 初始化为空对象
+
+    useEffect(() => {
+        const fetchFoodData = async () => {
+            try {
+                const response = await fetch('/api/foodData'); // 替换为您的API路由
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                const data = await response.json();
+
+                // 将数据按类型分组
+                const groupedData = {
+                    carbon: data.filter(item => item.type === '碳水来源'),
+                    protein: data.filter(item => item.type === '蛋白质来源'),
+                    fat: data.filter(item => item.type === '脂肪来源')
+                };
+
+                setFoodData(groupedData);
+            } catch (error) {
+                console.error("Could not fetch food data:", error);
+            }
+        };
+
+        fetchFoodData();
+    }, []);
 
     const calculateWeight = () => {
         const selectedFoodList = foodData[foodType];
@@ -22,23 +47,18 @@ const FoodWeightCalculator = () => {
 
         const newResults = selectedFoodList.map(food => {
             let nutrientContent;
-            let nutrientName;
             switch (foodType) {
                 case "carbon":
                     nutrientContent = food.carbon;
-                    nutrientName = "碳水";
                     break;
                 case "protein":
                     nutrientContent = food.protein;
-                    nutrientName = "蛋白质";
                     break;
                 case "fat":
                     nutrientContent = food.fat;
-                    nutrientName = "脂肪";
                     break;
                 default:
                     nutrientContent = 0;
-                    nutrientName = "未知";
             }
 
             let weight = '无法提供';
