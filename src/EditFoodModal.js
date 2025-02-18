@@ -1,11 +1,11 @@
-// AddFoodModal.js
-import React, { useState } from 'react';
-import './AddFoodModal.css';
+// EditFoodModal.js
+import React, { useState, useEffect } from 'react';
+import './EditFoodModal.css';
 
-const AddFoodModal = ({ isOpen, onClose }) => {
+const EditFoodModal = ({ isOpen, onClose, selectedFood }) => {
     const [password, setPassword] = useState('');
     const [isAuthorized, setIsAuthorized] = useState(false);
-    const [newFood, setNewFood] = useState({
+    const [foodData, setFoodData] = useState({
         foodname: '',
         type: '碳水来源',
         carbon: '',
@@ -13,9 +13,22 @@ const AddFoodModal = ({ isOpen, onClose }) => {
         fat: ''
     });
 
+    useEffect(() => {
+        // 当 selectedFood 改变时，更新 foodData 的状态
+        if (selectedFood) {
+            setFoodData({
+                foodname: selectedFood.foodname || '',
+                type: selectedFood.type || '碳水来源',
+                carbon: selectedFood.carbon || '',
+                protein: selectedFood.protein || '',
+                fat: selectedFood.fat || ''
+            });
+        }
+    }, [selectedFood]);
+
     const handleInputChange = (e) => {
         const { name, value } = e.target;
-        setNewFood(prevFood => ({
+        setFoodData(prevFood => ({
             ...prevFood,
             [name]: value
         }));
@@ -41,15 +54,15 @@ const AddFoodModal = ({ isOpen, onClose }) => {
         }
 
         // 验证数据是否完整
-        if (!newFood.foodname || !newFood.carbon || !newFood.protein || !newFood.fat) {
+        if (!foodData.foodname || !foodData.carbon || !foodData.protein || !foodData.fat) {
             alert('请填写所有字段!');
             return;
         }
 
         // 转换为数字
-        const carbon = parseFloat(newFood.carbon);
-        const protein = parseFloat(newFood.protein);
-        const fat = parseFloat(newFood.fat);
+        const carbon = parseFloat(foodData.carbon);
+        const protein = parseFloat(foodData.protein);
+        const fat = parseFloat(foodData.fat);
 
         if (isNaN(carbon) || isNaN(protein) || isNaN(fat)) {
             alert('碳水、蛋白质和脂肪含量必须是数字!');
@@ -57,23 +70,29 @@ const AddFoodModal = ({ isOpen, onClose }) => {
         }
 
         try {
-            const response = await fetch('/api/addFood', {
+            const response = await fetch('/api/editFood', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
                 },
-                body: JSON.stringify(newFood)
+                body: JSON.stringify(foodData)
             });
 
             if (!response.ok) {
-                throw new Error(`HTTP error! status: ${response.status}`);
+                const errorData = await response.json();
+                if (errorData.error === '请检查名称') {
+                    alert('请检查名称');
+                } else {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                return;
             }
 
-            alert('食材已成功添加!');
+            alert('食材已成功修改!');
             onClose(); // 关闭模态框
         } catch (error) {
-            console.error("Could not add food:", error);
-            alert('添加食材时出错!');
+            console.error("Could not edit food:", error);
+            alert('修改食材时出错!');
         }
     };
 
@@ -82,7 +101,7 @@ const AddFoodModal = ({ isOpen, onClose }) => {
     return (
         <div className="modal-overlay">
             <div className="modal">
-                <h2>添加新食材</h2>
+                <h2>修改食材</h2>
 
                 {!isAuthorized && (
                     <form onSubmit={handlePasswordSubmit} className="password-form">
@@ -104,7 +123,7 @@ const AddFoodModal = ({ isOpen, onClose }) => {
                             type="text"
                             id="foodname"
                             name="foodname"
-                            value={newFood.foodname}
+                            value={foodData.foodname}
                             onChange={handleInputChange}
                         />
 
@@ -112,7 +131,7 @@ const AddFoodModal = ({ isOpen, onClose }) => {
                         <select
                             id="type"
                             name="type"
-                            value={newFood.type}
+                            value={foodData.type}
                             onChange={handleInputChange}
                         >
                             <option>碳水来源</option>
@@ -125,7 +144,7 @@ const AddFoodModal = ({ isOpen, onClose }) => {
                             type="number"
                             id="carbon"
                             name="carbon"
-                            value={newFood.carbon}
+                            value={foodData.carbon}
                             onChange={handleInputChange}
                         />
 
@@ -134,7 +153,7 @@ const AddFoodModal = ({ isOpen, onClose }) => {
                             type="number"
                             id="protein"
                             name="protein"
-                            value={newFood.protein}
+                            value={foodData.protein}
                             onChange={handleInputChange}
                         />
 
@@ -143,12 +162,12 @@ const AddFoodModal = ({ isOpen, onClose }) => {
                             type="number"
                             id="fat"
                             name="fat"
-                            value={newFood.fat}
+                            value={foodData.fat}
                             onChange={handleInputChange}
                         />
 
                         <div className="buttons">
-                            <button type="submit">添加</button>
+                            <button type="submit">修改</button>
                             <button type="button" onClick={onClose}>取消</button>
                         </div>
                     </form>
@@ -158,4 +177,4 @@ const AddFoodModal = ({ isOpen, onClose }) => {
     );
 };
 
-export default AddFoodModal;
+export default EditFoodModal;

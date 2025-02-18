@@ -1,23 +1,27 @@
 // FoodWeightCalculator.js
 import React, { useState, useEffect } from 'react';
 import './FoodWeightCalculator.css';
+import AddFoodModal from './AddFoodModal';
+import EditFoodModal from './EditFoodModal';
 
 const FoodWeightCalculator = () => {
     const [nutrientAmount, setNutrientAmount] = useState(50);
     const [foodType, setFoodType] = useState('carbon');
     const [results, setResults] = useState([]);
-    const [foodData, setFoodData] = useState({ carbon: [], protein: [], fat: [] }); // 初始化为空对象
+    const [foodData, setFoodData] = useState({ carbon: [], protein: [], fat: [] });
+    const [isAddModalOpen, setIsAddModalOpen] = useState(false);
+    const [isEditModalOpen, setIsEditModalOpen] = useState(false);
+    const [selectedFood, setSelectedFood] = useState(null);
 
     useEffect(() => {
         const fetchFoodData = async () => {
             try {
-                const response = await fetch('/api/foodData'); // 替换为您的API路由
+                const response = await fetch('/api/foodData');
                 if (!response.ok) {
                     throw new Error(`HTTP error! status: ${response.status}`);
                 }
                 const data = await response.json();
 
-                // 将数据按类型分组
                 const groupedData = {
                     carbon: data.filter(item => item.type === '碳水来源'),
                     protein: data.filter(item => item.type === '蛋白质来源'),
@@ -31,7 +35,7 @@ const FoodWeightCalculator = () => {
         };
 
         fetchFoodData();
-    }, []);
+    }, [isAddModalOpen, isEditModalOpen]); // 依赖项添加 isAddModalOpen 和 isEditModalOpen
 
     const calculateWeight = () => {
         const selectedFoodList = foodData[foodType];
@@ -72,6 +76,24 @@ const FoodWeightCalculator = () => {
         setResults(newResults);
     };
 
+    const handleOpenAddModal = () => {
+        setIsAddModalOpen(true);
+    };
+
+    const handleCloseAddModal = () => {
+        setIsAddModalOpen(false);
+    };
+
+    const handleOpenEditModal = (food) => {
+        setSelectedFood(food);
+        setIsEditModalOpen(true);
+    };
+
+    const handleCloseEditModal = () => {
+        setSelectedFood(null);
+        setIsEditModalOpen(false);
+    };
+
     return (
         <div className="food-weight-calculator-container">
             <h2>食材重量计算器</h2>
@@ -96,7 +118,14 @@ const FoodWeightCalculator = () => {
                     />
                 </div>
             </div>
-            <button onClick={calculateWeight}>查询</button>
+
+            <div className="button-row">
+                <button className="calculate-button" onClick={calculateWeight}>查询</button>
+                <div className="right-buttons">
+                    <button className="add-food-button small-button" onClick={handleOpenAddModal}>添加食材</button>
+                    <button className="edit-food-button small-button" onClick={() => handleOpenEditModal(results[0])}>修改食材</button>
+                </div>
+            </div>
 
             <h3>计算结果</h3>
             <table className="result-table">
@@ -108,13 +137,16 @@ const FoodWeightCalculator = () => {
                 </thead>
                 <tbody>
                     {results.map((result, index) => (
-                        <tr key={index}>
+                        <tr key={index} onClick={() => handleOpenEditModal(result)}>
                             <td>{result.foodname}</td>
                             <td>{result.weight}</td>
                         </tr>
                     ))}
                 </tbody>
             </table>
+
+            <AddFoodModal isOpen={isAddModalOpen} onClose={handleCloseAddModal} />
+            <EditFoodModal isOpen={isEditModalOpen} onClose={handleCloseEditModal} selectedFood={selectedFood} />
         </div>
     );
 };

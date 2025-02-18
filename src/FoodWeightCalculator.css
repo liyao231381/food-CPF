@@ -81,6 +81,51 @@
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.15);
 }
 
+.button-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between; /* 将子元素分散对齐 */
+    margin-top: 10px;
+}
+
+/* 查询按钮的样式 */
+.calculate-button {
+    /* 可以添加一些样式，例如 padding, background-color 等 */
+    /* 这里添加了更大的内边距和突出的背景颜色 */
+    padding: 10px 20px;
+    background-color: #4CAF50; /* 更醒目的绿色 */
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+/* 右侧按钮容器的样式 */
+.right-buttons {
+    display: flex; /* 同样使用 Flexbox 布局 */
+    gap: 10px; /* 调整按钮之间的间距 */
+}
+
+/* 小尺寸按钮的样式 */
+.small-button {
+    font-size: 0.8em; /* 减小按钮的大小 */
+    padding: 5px 10px; /* 减小内边距 */
+    background-color: #008CBA; /* 一个示例颜色 */
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.small-button:hover {
+    background-color: #005f6b;
+}
+
+.calculate-button:hover {
+    background-color: #367c39;
+}
+
 .result-table {
     width: 100%;
     border-collapse: collapse;

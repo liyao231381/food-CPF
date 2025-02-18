@@ -1,4 +1,4 @@
-// api/addFood.js
+// api/editFood.js
 const { Pool } = require('pg');
 
 const pool = new Pool({
@@ -19,14 +19,29 @@ module.exports = async (req, res) => {
 
         try {
             const client = await pool.connect();
+
+            // 首先检查是否存在具有给定名称的食物
+            const checkQuery = 'SELECT * FROM food WHERE foodname = $1';
+            const checkValues = [foodname];
+            const checkResult = await client.query(checkQuery, checkValues);
+
+            if (checkResult.rows.length === 0) {
+                client.release();
+                return res.status(404).json({ error: '未找到该食材' }); // 使用404状态码
+            }
+
+            // 如果存在，则更新食物的数据
             const query = `
-                INSERT INTO food (foodname, type, carbon, protein, fat)
-                VALUES ($1, $2, $3, $4, $5)
+                UPDATE food
+                SET type = $2, carbon = $3, protein = $4, fat = $5
+                WHERE foodname = $1
             `;
-            const values = [foodname, type, carbon, protein, fat];
+            const values = [type, carbon, protein, fat, foodname]; // 注意顺序
+
             await client.query(query, values);
+
             client.release();
-            res.status(201).json({ message: '食材已成功添加!' }); // 使用201状态码
+            res.status(200).json({ message: '食材已成功修改!' });
         } catch (err) {
             console.error(err);
             res.status(500).json({ error: '服务器错误' });
