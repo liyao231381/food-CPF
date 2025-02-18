@@ -1,0 +1,256 @@
+/* CarbCalculator.css - 修正滑块问题 */
+
+/* 颜色变量，方便统一修改主题色 */
+:root {
+    --primary-color: #2979FF;
+    --secondary-color: #4CAF50;
+    --accent-color: #FF9800;
+    --background-color: #f5f7fb;
+    --card-background-color: #fff;
+    --text-color: #333;
+    --light-text-color: #777;
+    --border-color: #e0e0e0;
+    --table-header-background: var(--primary-color);
+    --table-header-text-color: #000000;
+    --table-row-even-background: #f8f8f8;
+    --table-row-hover-background: #f0f0f0;
+}
+
+/* 按钮链接样式 */
+.button-link {
+    display: inline-block;
+    font-size: 16px;
+    color: var(--table-header-text-color);
+    background-color: var(--primary-color);
+    padding: 12px 24px;
+    text-align: center;
+    border-radius: 8px;
+    text-decoration: none;
+    transition: background-color 0.3s ease;
+    font-weight: 500;
+}
+
+/* 计算器容器 */
+#carb-calculator-container {
+    --primary: var(--primary-color);
+    --secondary: var(--secondary-color);
+    --accent: var(--accent-color);
+    --background: var(--background-color);
+    --text: var(--text-color);
+    background-color: var(--background-color);
+    color: var(--text-color);
+    max-width: 90%;
+    padding: 20px;
+    margin: 20px auto;
+    border: none;
+    border-radius: 12px;
+    scrollbar-width: none;
+    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.08);
+}
+
+#carb-calculator-container h2 {
+    color: var(--primary-color);
+    text-align: center;
+    margin-bottom: 1.5rem;
+    font-weight: 700;
+    letter-spacing: -0.025em;
+    font-size: 2rem;
+}
+
+.input-group {
+    background-color: var(--card-background-color);
+    padding: 2rem;
+    border-radius: 16px;
+    box-shadow: 0 3px 5px -1px rgba(111, 111, 111, 0.15);
+    margin-bottom: 2rem;
+}
+
+.input-row {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    margin-bottom: 1.5rem;
+}
+
+.input-row label {
+    min-width: 120px;
+    font-weight: 600;
+    color: var(--light-text-color);
+    font-size: medium;
+}
+
+.input-row input[type="number"],
+.input-row input[type="range"] {
+    border: 2px solid var(--border-color);
+    border-radius: 8px;
+    width: 180px;
+    transition: border-color 0.2s ease;
+    background-color: var(--card-background-color);
+    color: var(--text-color);
+    font-weight: 500;
+    font-size: 1rem;
+}
+
+.input-row input[type="number"] {
+    padding: 0.75rem;
+}
+
+.input-row input[type="number"]:focus,
+.input-row input[type="range"]:focus {
+    border-color: var(--primary-color);
+    outline: none;
+    box-shadow: 0 0 0 2px rgba(41, 121, 255, 0.2);
+}
+
+.input-row input[type="range"] {
+    cursor: pointer; /* 确保 cursor 为 pointer */
+    -webkit-appearance: none;
+    appearance: none;
+    height: 24px;
+    background: repeating-linear-gradient(to right, #ddd 0, #ddd 5px, transparent 5px, transparent 10px);
+    border-radius: 12px;
+}
+
+.input-row input[type="range"]::-webkit-slider-thumb {
+    -webkit-appearance: none; /* 确保 Webkit appearance */
+    appearance: none;        /* 确保 standard appearance */
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    background-color: var(--primary-color);
+    cursor: pointer;
+    border: 3px solid var(--card-background-color);
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.25);
+    transition: transform 0.2s ease;
+    /* pointer-events: auto;  显式设置 pointer-events 为 auto，确保可以交互 (默认值，但可以显式强调) */
+}
+
+.input-row input[type="range"]::-webkit-slider-thumb:hover {
+    transform: scale(1.1);
+}
+
+.input-row input[type="range"]::-webkit-slider-runnable-track {
+    height: 24px;
+    border-radius: 12px;
+    background: linear-gradient(to right, rgb(119, 255, 124), rgb(129, 198, 255), rgb(255, 105, 105), rgb(255, 153, 0) var(--progress), transparent var(--progress));
+}
+
+/* Firefox 滑块 thumb 样式 (添加 Firefox 兼容性) */
+.input-row input[type="range"]::-moz-range-thumb {
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    background-color: var(--primary-color);
+    cursor: pointer;
+    border: 3px solid var(--card-background-color);
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.25);
+    transition: transform 0.2s ease;
+}
+
+.input-row input[type="range"]::-moz-range-thumb:hover {
+    transform: scale(1.1);
+}
+
+/* Firefox 滑块 track 样式 (如果需要更精细的 Firefox 样式，可以添加) */
+.input-row input[type="range"]::-moz-range-track {
+    height: 24px;
+    border-radius: 12px;
+    background: repeating-linear-gradient(to right, #ddd 0, #ddd 5px, transparent 5px, transparent 10px);
+    /* 可以考虑添加 background-image 来模拟 Webkit 的颜色渐变效果，如果需要 */
+}
+
+
+#trainingLevelValue,
+#bodyTypeValue {
+    min-width: 80px;
+    text-align: center;
+    font-weight: 600;
+    color: var(--primary-color);
+    font-size: 1rem;
+}
+
+#buttons {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 2rem;
+}
+
+.export-btn {
+    background-color: var(--secondary-color);
+    color: var(--table-header-text-color);
+    padding: 1rem 2.5rem;
+    border: none;
+    border-radius: 12px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    display: block;
+    width: fit-content;
+    font-size: 1.1rem;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.export-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.15);
+}
+
+#buttons .export-hint {
+    font-size: 14px;
+    color: var(--light-text-color);
+    margin-top: 0.5rem;
+    margin-bottom: 1.5rem;
+}
+
+#result {
+    width: 100%;
+    border-collapse: collapse;
+    background-color: var(--card-background-color);
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 5px 8px -2px rgba(0, 0, 0, 0.12);
+    margin-bottom: 2rem;
+}
+
+#result th,
+#result td {
+    padding: 0.75rem 0.5rem;
+    text-align: center;
+    color: var(--text-color);
+    font-size: 0.9rem;
+    border-bottom: 1px solid var(--border-color);
+}
+
+#result th {
+    background-color: var(--table-header-background);
+    color: var(--table-header-text-color);
+    font-weight: 600;
+    font-size: 1rem;
+    border-bottom: 2px solid var(--primary-color);
+}
+
+#result th:first-child,
+#result td:first-child {
+    text-align: left;
+    padding-left: 1rem;
+}
+
+#result th:last-child,
+#result td:last-child {
+    text-align: left;
+    padding-right: 1rem;
+}
+
+#result tr:last-child td {
+    border-bottom: none;
+}
+
+#result tr:nth-child(even) {
+    background-color: var(--table-row-even-background);
+}
+
+#result tr:hover {
+    background-color: var(--table-row-hover-background);
+}

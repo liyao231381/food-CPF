@@ -1,0 +1,139 @@
+/* FoodWeightCalculator.css */
+
+.food-weight-calculator-container {
+    max-width: 90%;
+    padding: 20px;
+    margin: 20px auto;
+    border: none;
+    border-radius: 12px;
+    scrollbar-width: none;
+    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.08);
+    --primary: var(--primary-color);
+    --secondary: var(--secondary-color);
+    --accent: var(--accent-color);
+    --background: var(--background-color);
+    --text: var(--text-color);
+    background-color: var(--background-color);
+    color: var(--text-color);
+    text-align: center;
+}
+
+.food-weight-calculator-container h2 {
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+    color: var(--primary-color); /* 使用 CarbCalculator 的变量 */
+}
+
+.input-all {
+    display: flex;
+    justify-content: center;
+    gap: 1.5rem;
+    margin-bottom: 1.5rem;
+}
+
+.input-area {
+    margin-bottom: 1rem;
+}
+
+.input-area label {
+    display: block;
+    margin-bottom: 0.5rem;
+    color: var(--light-text-color); /* 使用 CarbCalculator 的变量 */
+    font-weight: 600;
+    text-align: left;
+    min-width: 200px;
+}
+
+.input-area input[type="number"],
+.input-area select {
+    width: 200px;
+    padding: 0.75rem;
+    border: 2px solid var(--border-color); /* 使用 CarbCalculator 的变量 */
+    border-radius: 8px;
+    background-color: var(--card-background-color); /* 使用 CarbCalculator 的变量 */
+    color: var(--text-color); /* 使用 CarbCalculator 的变量 */
+    font-size: 1rem;
+}
+
+.input-area input[type="number"]:focus,
+.input-area select:focus {
+    border-color: var(--primary-color); /* 使用 CarbCalculator 的变量 */
+    outline: none;
+    box-shadow: 0 0 0 2px rgba(41, 121, 255, 0.2);
+}
+
+.food-weight-calculator-container button {
+    padding: 0.75rem 1.5rem;
+    border: none;
+    border-radius: 12px;
+    background-color: var(--secondary-color); /* 使用 CarbCalculator 的变量 */
+    color: var(--table-header-text-color); /* 使用 CarbCalculator 的变量 */
+    cursor: pointer;
+    font-size: 1.1rem;
+    font-weight: 600;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.food-weight-calculator-container button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.15);
+}
+
+.result-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 1.5rem;
+    background-color: var(--card-background-color); /* 使用 CarbCalculator 的变量 */
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 5px 8px -2px rgba(0, 0, 0, 0.12);
+}
+
+.result-table th,
+.result-table td {
+    padding: 0.75rem 0.5rem;
+    text-align: center;
+    color: var(--text-color); /* 使用 CarbCalculator 的变量 */
+    font-size: 0.9rem;
+    border-bottom: 1px solid var(--border-color); /* 使用 CarbCalculator 的变量 */
+}
+
+.result-table th {
+    background-color: var(--table-header-background); /* 使用 CarbCalculator 的变量 */
+    color: var(--table-header-text-color); /* 使用 CarbCalculator 的变量 */
+    font-weight: 600;
+    font-size: 1rem;
+    border-bottom: 2px solid var(--primary-color); /* 使用 CarbCalculator 的变量 */
+}
+
+.result-table th:first-child,
+.result-table td:first-child {
+    text-align: left;
+    padding-left: 1rem;
+}
+
+.result-table th:last-child,
+.result-table td:last-child {
+    text-align: left;
+    padding-right: 1rem;
+}
+
+.result-table tr:last-child td {
+    border-bottom: none;
+}
+
+.result-table tr:nth-child(even) {
+    background-color: var(--table-row-even-background); /* 使用 CarbCalculator 的变量 */
+}
+
+.result-table tr:hover {
+    background-color: var(--table-row-hover-background); /* 使用 CarbCalculator 的变量 */
+}
+
+.food-weight-calculator-container h3 {
+    text-align: center;
+    margin-bottom: 1rem;
+    color: var(--primary-color); /* 使用 CarbCalculator 的变量 */
+}
