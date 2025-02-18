@@ -36,7 +36,7 @@ module.exports = async (req, res) => {
                 SET type = $2, carbon = $3, protein = $4, fat = $5
                 WHERE foodname = $1
             `;
-            const values = [type, carbon, protein, fat, foodname]; // 注意顺序
+            const values = [foodname, type, carbon, protein, fat];
 
             await client.query(query, values);
 
