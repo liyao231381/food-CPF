@@ -1,51 +1,102 @@
 /* App.css */
 
+:root {
+  /* 定义全局 CSS 变量 */
+  --primary-color: #4CAF50; /* 主色调（例如：绿色） */
+  --secondary-color: #008CBA; /* 辅助色调（例如：蓝色） */
+  --accent-color: #f44336; /* 强调色（例如：红色） */
+  --background-color: #f8f9fa; /* 背景色 */
+  --card-background-color: #fff; /* 卡片背景色 */
+  --text-color: #333; /* 文本颜色 */
+  --light-text-color: #555; /* 较浅的文本颜色 */
+  --border-color: #ddd; /* 边框颜色 */
+  --table-header-background: #e9ecef; /* 表格头部背景色 */
+  --table-header-text-color: #495057; /* 表格头部文本颜色 */
+  --table-row-even-background: #f8f9fa; /* 表格偶数行背景色 */
+  --table-row-hover-background: #e2e6ea; /* 表格行悬停背景色 */
+}
+
 .App {
   text-align: center;
+  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  background-color: var(--background-color); /* 使用全局背景色 */
+  color: var(--text-color); /* 使用全局文本颜色 */
+  min-height: 100vh; /* 至少填满整个视口高度 */
+  display: flex;
+  flex-direction: column; /* 垂直排列子元素 */
 }
 
 .App-header {
-  background-color: #f0f0f0; /* 或其他你喜欢的背景色 */
-  min-height: 100vh;          /* 占据整个视口高度 */
+  /* Header 现在主要用于包含标题等内容 */
+  background-color: var(--primary-color);
+  color: white;
+  padding: 1rem 0;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.content-wrapper {
+  /* 新增一个内容包装器，用于控制主要内容的布局 */
+  flex-grow: 1; /* 填充剩余空间 */
   display: flex;
-  flex-direction: column;    /* 垂直排列子元素 */
-  align-items: center;        /* 水平居中 */
-  justify-content: flex-start; /* 垂直方向顶部对齐，为下方区域留出空间 */
-  font-size: calc(10px + 2vmin);
-  color: #333;               /* 或其他你喜欢的文字颜色 */
+  flex-direction: column;
+  align-items: center; /* 水平居中 */
+  padding: 1rem; /* 增加一些内边距 */
+  box-sizing: border-box; /* 确保 padding 不会增加元素宽度 */
 }
 
 .carb-calculator-section,
 .food-weight-section {
-  width: 100%;               /* 占据整个宽度 */
-  max-width: 960px;           /* 设置一个最大宽度 */
-  margin: 0 auto;            /* 水平居中 */
-  padding: 20px;             /* 增加一些内边距 */
-  box-sizing: border-box;    /* 确保 padding 不会增加元素宽度 */
+  width: 100%;
+  max-width: 960px;
+  margin: 1rem 0; /* 上下外边距 */
+  padding: 1rem;
+  box-sizing: border-box;
+  background-color: var(--card-background-color);
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 .additional-content-section {
-  width: 100%;               /* 占据整个宽度 */
-  min-height: 200px;          /* 设置一个最小高度 */
-  background-color: #fff;   /* 设置一个背景颜色，方便查看 */
-  padding: 20px;             /* 增加一些内边距 */
-  box-sizing: border-box;    /* 确保 padding 不会增加元素宽度 */
-  margin-top: 20px;          /* 增加与上方区域的间距 */
+  width: 100%;
+  max-width: 960px;
+  margin: 1rem 0;
+  padding: 1rem;
+  box-sizing: border-box;
+  background-color: var(--card-background-color);
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
+/* 移动端适配：当屏幕宽度小于 768px 时 */
+@media (max-width: 768px) {
+  .carb-calculator-section,
+  .food-weight-section,
+  .additional-content-section {
+      margin: 0.5rem 0; /* 减小外边距 */
+      padding: 0.5rem; /* 减小内边距 */
+      border-radius: 4px; /* 减小圆角 */
+  }
+
+  .App-header {
+      padding: 0.5rem 0; /* 减小头部内边距 */
+  }
+
+  .content-wrapper {
+      padding: 0.5rem; /* 减小内容包装器内边距 */
+  }
+}
+
+/* 美化按钮 */
 .edit-button {
-  position: absolute;
-  top: 10px;
-  right: 10px;
-  padding: 8px 12px;
-  background-color: #007bff;
+  background-color: var(--secondary-color);
   color: white;
   border: none;
   border-radius: 4px;
+  padding: 8px 12px;
   cursor: pointer;
-  text-decoration: none;
+  transition: background-color 0.3s ease;
 }
 
 .edit-button:hover {
-  background-color: #0056b3;
+  background-color: #0056b3; /* 悬停时颜色变深 */
 }

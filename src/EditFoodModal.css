@@ -6,21 +6,42 @@
     left: 0;
     width: 100%;
     height: 100%;
-    background: rgba(0, 0, 0, 0.5);
+    background-color: rgba(0, 0, 0, 0.5); /* 半透明背景 */
     display: flex;
     justify-content: center;
     align-items: center;
-    z-index: 1000;
+    z-index: 1000; /* 确保在其他元素之上 */
 }
 
 .modal {
-    background: white;
+    background-color: white;
     padding: 20px;
     border-radius: 8px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
-    width: 80%;
-    max-width: 600px;
-    text-align: center;
+    width: 80%; /* 可以根据需要调整 */
+    max-width: 500px;
+    position: relative; /*  为绝对定位的关闭按钮设置相对定位  */
+}
+
+.password-form-header {
+    display: flex;
+    justify-content: space-between; /* 将标签和关闭按钮分开 */
+    align-items: center;
+    margin-bottom: 10px; /* 增加底部间距 */
+}
+
+.close-button {
+    background: none;
+    border: none;
+    font-size: 24px;
+    cursor: pointer;
+    color: #888; /* 调整颜色 */
+    padding: 0; /*  移除内边距  */
+    line-height: 1; /*  修复行高问题  */
+}
+
+.close-button:hover {
+    color: black; /* 鼠标悬停时改变颜色 */
 }
 
 .modal h2 {
@@ -70,4 +91,3 @@
     background-color: #d9534f;
     color: white;
 }
-

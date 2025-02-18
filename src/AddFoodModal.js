@@ -86,7 +86,12 @@ const AddFoodModal = ({ isOpen, onClose }) => {
 
                 {!isAuthorized && (
                     <form onSubmit={handlePasswordSubmit} className="password-form">
-                        <label htmlFor="password">管理员密码:</label>
+                        <div className="password-form-header">
+                            <label htmlFor="password">管理员密码:</label>
+                            <button type="button" onClick={onClose} className="close-button">
+                                &times; {/* 关闭按钮的 X 符号 */}
+                            </button>
+                        </div>
                         <input
                             type="password"
                             id="password"
@@ -98,7 +103,7 @@ const AddFoodModal = ({ isOpen, onClose }) => {
                 )}
 
                 {isAuthorized && (
-                    <form onSubmit={handleSubmit} className="food-form">
+                     <form onSubmit={handleSubmit} className="food-form">
                         <label htmlFor="foodname">食材名称:</label>
                         <input
                             type="text"
@@ -146,7 +151,6 @@ const AddFoodModal = ({ isOpen, onClose }) => {
                             value={newFood.fat}
                             onChange={handleInputChange}
                         />
-
                         <div className="buttons">
                             <button type="submit">添加</button>
                             <button type="button" onClick={onClose}>取消</button>

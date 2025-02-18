@@ -105,7 +105,12 @@ const EditFoodModal = ({ isOpen, onClose, selectedFood }) => {
 
                 {!isAuthorized && (
                     <form onSubmit={handlePasswordSubmit} className="password-form">
-                        <label htmlFor="password">管理员密码:</label>
+                        <div className="password-form-header">
+                            <label htmlFor="password">管理员密码:</label>
+                            <button type="button" onClick={onClose} className="close-button">
+                                &times; {/* 关闭按钮的 X 符号 */}
+                            </button>
+                        </div>
                         <input
                             type="password"
                             id="password"
@@ -118,58 +123,58 @@ const EditFoodModal = ({ isOpen, onClose, selectedFood }) => {
 
                 {isAuthorized && (
                     <form onSubmit={handleSubmit} className="food-form">
-                        <label htmlFor="foodname">食材名称:</label>
-                        <input
-                            type="text"
-                            id="foodname"
-                            name="foodname"
-                            value={foodData.foodname}
-                            onChange={handleInputChange}
-                        />
+                        {/* ... (其他表单元素保持不变) */}
+                         <label htmlFor="foodname">食材名称:</label>
+                            <input
+                                type="text"
+                                id="foodname"
+                                name="foodname"
+                                value={foodData.foodname}
+                                onChange={handleInputChange}
+                            />
 
-                        <label htmlFor="type">食材类型:</label>
-                        <select
-                            id="type"
-                            name="type"
-                            value={foodData.type}
-                            onChange={handleInputChange}
-                        >
-                            <option>碳水来源</option>
-                            <option>蛋白质来源</option>
-                            <option>脂肪来源</option>
-                        </select>
+                            <label htmlFor="type">食材类型:</label>
+                            <select
+                                id="type"
+                                name="type"
+                                value={foodData.type}
+                                onChange={handleInputChange}
+                            >
+                                <option>碳水来源</option>
+                                <option>蛋白质来源</option>
+                                <option>脂肪来源</option>
+                            </select>
 
-                        <label htmlFor="carbon">碳水含量:</label>
-                        <input
-                            type="number"
-                            id="carbon"
-                            name="carbon"
-                            value={foodData.carbon}
-                            onChange={handleInputChange}
-                        />
+                            <label htmlFor="carbon">碳水含量:</label>
+                            <input
+                                type="number"
+                                id="carbon"
+                                name="carbon"
+                                value={foodData.carbon}
+                                onChange={handleInputChange}
+                            />
 
-                        <label htmlFor="protein">蛋白质含量:</label>
-                        <input
-                            type="number"
-                            id="protein"
-                            name="protein"
-                            value={foodData.protein}
-                            onChange={handleInputChange}
-                        />
+                            <label htmlFor="protein">蛋白质含量:</label>
+                            <input
+                                type="number"
+                                id="protein"
+                                name="protein"
+                                value={foodData.protein}
+                                onChange={handleInputChange}
+                            />
 
-                        <label htmlFor="fat">脂肪含量:</label>
-                        <input
-                            type="number"
-                            id="fat"
-                            name="fat"
-                            value={foodData.fat}
-                            onChange={handleInputChange}
-                        />
-
-                        <div className="buttons">
-                            <button type="submit">修改</button>
-                            <button type="button" onClick={onClose}>取消</button>
-                        </div>
+                            <label htmlFor="fat">脂肪含量:</label>
+                            <input
+                                type="number"
+                                id="fat"
+                                name="fat"
+                                value={foodData.fat}
+                                onChange={handleInputChange}
+                            />
+                            <div className="buttons">
+                                <button type="submit">修改</button>
+                                <button type="button" onClick={onClose}>取消</button>
+                            </div>
                     </form>
                 )}
             </div>
