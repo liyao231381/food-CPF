@@ -103,7 +103,7 @@ function FoodTable() {
                     脂肪
                 </button>
             </div>
-            <p className="table-description">所有数值为100g该食材的含量，点击表头可以切换排序方式</p>
+            <p className="table-description">所有数值为100g该食材的元素含量，点击表头可以切换排序方式</p>
             {/* 将 isLoading 判断移除，因为数据从 context 获取 */}
             {/* {isLoading ? (
                 <p>加载中...</p>

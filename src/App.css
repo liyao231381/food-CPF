@@ -72,22 +72,24 @@
   list-style: none;
   padding: 10px 20px;
   cursor: pointer;
-  border: 1px solid #ccc;
+  border: none;
   border-bottom: none;
-  background: #eee;
+  background: var(--secondary-color);
   border-radius: 5px 5px 0 0;
   margin: 0 5px;
   font-size: calc(9px + 0.8vmin);
   /* 减小字体大小 */
   font-weight: bold;
   /* 加粗文字 */
+  color: white
 }
 
 .react-tabs__tab--selected {
   background-color: #ffa500;
   /* 选中的背景颜色为橙色 */
   border-color: #aaa;
-  color: #222;
+  color: white;
+  font-size: large;
 }
 
 .react-tabs__tab:focus {
@@ -96,7 +98,7 @@
 }
 
 .react-tabs__tabpanel {
-  padding: 20px;
+  padding: 0 20px;
   background: #fff;
   border: 1px solid #aaa;
   border-radius: 0 0 5px 5px;
@@ -123,16 +125,16 @@
 
 /* 管理面板按钮的样式 */
 .admin-button {
-  display: inline-block;
-  padding: 10px 20px;
-  background-color: #007bff;
+  /*display: inline-block;*/
+  /*padding: 10px 20px;*/
   color: white;
   text-decoration: none;
   border-radius: 5px;
   font-size: calc(9px + 0.8vmin);
   /* 减小字体大小 */
+  border: none;
 }
 
 .admin-button:hover {
-  background-color: #0056b3;
+  background-color: rgba(0, 0, 0, 0.1);
 }

@@ -60,7 +60,10 @@ function App() {
                 <div className="header-container">
                     <h1 className="header-title">饮食一条龙</h1>
                     <Link to="/admin" className="admin-button">
-                        进入管理面板
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="#00aaff" width="24px" height="24px">
+                            <path d="M0 0h24v24H0z" fill="none"/>
+                            <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 3c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3zm0 14.2c-2.5 0-4.71-1.28-6-3.22.03-.99 1.97-3.08 6-3.08 4.03 0 5.97 2.09 6 3.08-1.29 1.94-3.5 3.22-6 3.22z"/>
+                        </svg>
                     </Link>
                 </div>
             </header>
@@ -73,9 +76,15 @@ function App() {
                     <FoodDataContext.Provider value={foodData}>
                         <Tabs>
                             <TabList>
-                                <Tab>食材重量计算器</Tab>
-                                <Tab>🥦 碳循环饮食计算器 💪</Tab>
-                                <Tab>食材成分表</Tab>
+                                <Tab>
+                                    🧮食材重量计算器
+                                </Tab>
+                                <Tab>
+                                    💪碳循环饮食计算器
+                                </Tab>
+                                <Tab>
+                                    🥦食材成分表
+                                </Tab>
                             </TabList>
 
                             <TabPanel>

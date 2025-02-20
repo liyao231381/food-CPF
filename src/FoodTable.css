@@ -136,6 +136,7 @@
 .tab-button.active {
     background-color: #ffa500;
     /* 选中的标签背景色变为橙色 */
+    font-size: large;
 }
 
 /* 表头文字颜色 */
