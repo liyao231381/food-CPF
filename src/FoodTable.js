@@ -102,16 +102,29 @@ function FoodTable() {
         setSearchTerm(e.target.value);
     };
 
+    const handleClearSearch = () => {
+        setSearchTerm('');
+    };
+
     return (
         <div>
             {/* 新增：搜索框 */}
-            <input
-                type="text"
-                placeholder="搜索食材名称"
-                value={searchTerm}
-                onChange={handleSearch}
-                className="food-search-input" // 可以添加一个 CSS 类来设置样式
-            />
+            <div className="food-search-input-wrapper">
+                <input
+                    type="text"
+                    placeholder="搜索食材名称"
+                    value={searchTerm}
+                    onChange={handleSearch}
+                    className="food-search-input"
+                />
+                {searchTerm && (
+                    <button className="food-search-clear" onClick={handleClearSearch}>
+                        <svg viewBox="0 0 24 24" fill="currentColor" height="1rem" width="1rem">
+                            <path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"></path>
+                        </svg>
+                    </button>
+                )}
+            </div>
             <div className="tab-buttons">
                 <button
                     className={`tab-button ${activeTab === 'carbon' ? 'active' : ''}`}
@@ -132,7 +145,7 @@ function FoodTable() {
                     脂肪
                 </button>
             </div>
-            <p className="table-description">所有数值为100g该食材的元素含量，点击表头可以切换排序方式</p>
+            <p className="table-description">所有数值为100g该食材的元素含量(g)，点击表头可以<strong style={{ color: 'orange' }}>切换排序方式</strong></p>
             {/* 将 isLoading 判断移除，因为数据从 context 获取 */}
             {/* {isLoading ? (
                 <p>加载中...</p>

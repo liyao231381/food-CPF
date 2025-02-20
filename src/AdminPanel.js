@@ -1,7 +1,10 @@
 // AdminPanel.js
 import React, { useState, useEffect } from 'react';
-import { useNavigate, Link } from 'react-router-dom'; // 引入 Link
-import './AdminPanel.css'; // 引入管理面板的独立样式文件
+import { useNavigate, Link } from 'react-router-dom';
+import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
+import 'react-tabs/style/react-tabs.css';
+import './AdminPanel.css';
+import FoodDataEditor from './FoodDataEditor';
 
 function AdminPanel() {
     const navigate = useNavigate();
@@ -9,7 +12,6 @@ function AdminPanel() {
     const [isLoggedIn, setIsLoggedIn] = useState(false);
 
     useEffect(() => {
-        // 检查是否已登录
         const storedPassword = localStorage.getItem('adminPassword');
         if (storedPassword === process.env.REACT_APP_ADMIN_PASSWORD) {
             setIsLoggedIn(true);
@@ -23,18 +25,23 @@ function AdminPanel() {
     const handleLogin = () => {
         if (password === process.env.REACT_APP_ADMIN_PASSWORD) {
             setIsLoggedIn(true);
-            // 保存密码到 localStorage
             localStorage.setItem('adminPassword', password);
+            navigate('/admin');
         } else {
             alert('密码错误！');
         }
     };
 
+    const handleKeyDown = (event) => {
+        if (event.key === 'Enter') {
+            handleLogin();
+        }
+    };
+
     const handleLogout = () => {
         setIsLoggedIn(false);
-        // 清除 localStorage 中的密码
         localStorage.removeItem('adminPassword');
-        navigate('/admin'); // 跳转到登录页面
+        navigate('/admin');
     };
 
     if (!isLoggedIn) {
@@ -49,6 +56,7 @@ function AdminPanel() {
                         type="password"
                         value={password}
                         onChange={handlePasswordChange}
+                        onKeyDown={handleKeyDown}
                     />
                     <button onClick={handleLogin}>登录</button>
                 </main>
@@ -62,25 +70,37 @@ function AdminPanel() {
     return (
         <div className="admin-panel">
             <header className="admin-header">
-                {/* 使用 flex 布局，两端对齐 */}
                 <div className="header-container">
-                    {/* 返回主页按钮 */}
                     <Link to="/" className="home-button">
                         返回
                     </Link>
-                    <h1>管理面板</h1>
-                    {/* 退出登录按钮 */}
+                    <h1 className="header-title">管理面板</h1>
                     <button onClick={handleLogout} className="logout-button">
                         退出
                     </button>
                 </div>
             </header>
-            <main className="admin-main">
-                <p>暂无内容</p>
-                {/* 在这里添加管理面板的具体内容 */}
-            </main>
+            <div className="content-container">
+                <Tabs>
+                    <TabList>
+                        <Tab>食材数据管理</Tab>
+                        <Tab>消息管理</Tab>
+                        <Tab>用户管理</Tab>
+                    </TabList>
+
+                    <TabPanel>
+                        <FoodDataEditor />
+                    </TabPanel>
+                    <TabPanel>
+                        <p>消息管理内容</p>
+                    </TabPanel>
+                    <TabPanel>
+                        <p>用户管理内容</p>
+                    </TabPanel>
+                </Tabs>
+            </div>
             <footer className="admin-footer">
-                <p>&copy; @李瑶瑶种太阳 独立开发</p>
+                <p>&copy; 2025 @李瑶瑶种太阳 独立开发</p>
             </footer>
         </div>
     );

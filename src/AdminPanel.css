@@ -3,27 +3,49 @@
 .admin-panel {
     font-family: Arial, sans-serif;
     background-color: #f9f9f9;
-    min-height: 100vh;
+    min-height: 100vh; /* 设置最小高度为视口高度 */
     display: flex;
     flex-direction: column;
     align-items: center; /* 居中对齐 */
-    justify-content: center; /* 垂直居中 */
+    justify-content: flex-start; /* 垂直居中 */
 }
 
 .admin-header {
-    background-color: #333;
-    color: white;
-    text-align: center;
-    padding: 20px;
+    background-color: #f4f4f4;
+    /* 更柔和的背景色 */
+    /*min-height: 100vh;*/
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    font-size: calc(8px + 1vmin);
+    /* 减小字体大小 */
+    color: #333;
+    padding: 10px;
+    /* 增加内边距 */
     width: 100%;
-    box-sizing: border-box;
 }
 
 /* 头部容器样式 */
-.admin-header .header-container {
+.header-container {
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
     display: flex;
-    justify-content: space-between; /* 两端对齐 */
-    align-items: center; /* 垂直居中 */
+    justify-content: space-between;
+    /* 两端对齐 */
+    align-items: center;
+    /* 垂直居中 */
+}
+
+/* 头部标题样式 */
+.header-title {
+    text-align: center;
+    /* 居中显示 */
+    flex-grow: 1;
+    /* 占据剩余空间 */
+    margin: 0;
+    /* 移除默认边距 */
 }
 
 .admin-main {
@@ -49,12 +71,16 @@
 }
 
 .admin-footer {
-    background-color: #333;
-    color: white;
-    text-align: center;
-    padding: 10px;
+    min-height: 2rem;
+    align-items: center;
+    justify-content: center;
+    display: flex;
+    background-color: #f4f4f4;
+    /* 更柔和的背景色 */
+    font-size: medium;
+    font-weight: 100;
+    font-family: 'Times New Roman', Times, serif;
     width: 100%;
-    box-sizing: border-box;
 }
 
 /* 退出登录按钮样式 */
@@ -85,4 +111,93 @@
 
 .home-button:hover {
     background-color: #0056b3;
+}
+
+.content-container {
+    width: 90%;
+    /* 页面内容宽度 */
+    max-width: 800px;
+    /* 最大宽度 */
+    margin: 0 auto;
+    padding: 20px;
+    box-sizing: border-box;
+    background-color: #fff;
+    /* 白色背景 */
+    border-radius: 8px;
+    /* 圆角边框 */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    /* 阴影效果 */
+    font-size: calc(9px + 1vmin);
+    /* 减小字体大小 */
+    flex: 1; /* 让内容区域占据剩余空间 */
+    display: flex;
+    flex-direction: column;
+}
+
+/* 调整 react-tabs 的样式 */
+.react-tabs__tab-list {
+    display: flex;
+    justify-content: center;
+    /* 标签居中 */
+    margin: 0 0 10px;
+    padding: 0;
+}
+
+.react-tabs__tab {
+    list-style: none;
+    padding: 10px 10px;
+    cursor: pointer;
+    border: none;
+    border-bottom: none;
+    background: var(--secondary-color);
+    border-radius: 5px 5px 0 0;
+    margin: 0 5px;
+    font-size: 14px;
+    /* 减小字体大小 */
+    font-weight: bold;
+    /* 加粗文字 */
+    color: white
+}
+
+.react-tabs__tab--selected {
+    background-color: #ffa500;
+    /* 选中的背景颜色为橙色 */
+    border-color: #aaa;
+    color: white;
+    font-size: large;
+}
+
+.react-tabs__tab:focus {
+    outline: none;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+}
+
+.react-tabs__tabpanel {
+    padding: 0 20px;
+    background: #fff;
+    border: 1px solid #aaa;
+    border-radius: 0 0 5px 5px;
+    font-size: calc(9px + 0.8vmin);
+    /* 减小字体大小 */
+    flex: 1; /* 让 tabpanel 占据剩余空间 */
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start; /* 内容从顶部开始 */
+}
+
+.react-tabs__tabpanel--selected {
+    display: block;
+}
+
+/* 媒体查询，针对小屏幕设备 */
+@media (max-width: 768px) {
+    .content-container {
+        width: 100%;
+        padding: 10px;
+    }
+
+    .react-tabs__tab {
+        padding: 8px 4px;
+        margin: 0 1px;
+    }
 }

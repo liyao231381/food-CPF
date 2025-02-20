@@ -67,14 +67,14 @@ const FoodWeightCalculator = () => {
                 <div className="input-area">
                     <label htmlFor="foodType">选择食材类型:</label>
                     <select id="foodType" value={foodType} onChange={e => {setFoodType(e.target.value); calculateWeight()}}>
-                        <option value="carbon">碳水来源</option>
-                        <option value="protein">蛋白质来源</option>
-                        <option value="fat">脂肪来源</option>
+                        <option value="carbon">主食/碳水</option>
+                        <option value="protein">蛋白质</option>
+                        <option value="fat">脂肪</option>
                     </select>
                 </div>
 
                 <div className="input-area">
-                    <label htmlFor="nutrientAmount">请输入营养素需求量 (克):</label>
+                    <label htmlFor="nutrientAmount">请输入营养素需求量 (g):</label>
                     <input
                         type="number"
                         id="nutrientAmount"
@@ -91,8 +91,8 @@ const FoodWeightCalculator = () => {
                 <table className="result-table">
                     <thead>
                         <tr>
-                            <th>食材名称</th>
-                            <th>所需重量 (克)</th>
+                            <th>食材</th>
+                            <th>所需重量 (g)</th>
                         </tr>
                     </thead>
                     <tbody>

@@ -167,7 +167,7 @@
     color: white; /* 文字改为白色 */
     padding: 0.5rem 1rem; /* 大小减小 */
     border: none;
-    border-radius: 12px;
+    border-radius: 8px;
     font-weight: 600;
     cursor: pointer;
     transition: transform 0.2s ease, box-shadow 0.2s ease;

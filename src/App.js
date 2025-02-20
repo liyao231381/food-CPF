@@ -58,7 +58,7 @@ function App() {
             {/* 添加头部 */}
             <header className="App-header">
                 <div className="header-container">
-                    <h1 className="header-title">饮食一条龙</h1>
+                    <h1 className="header-title">🍴饮食一条龙🐉</h1>
                     <Link to="/admin" className="admin-button">
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="#00aaff" width="24px" height="24px">
                             <path d="M0 0h24v24H0z" fill="none"/>
@@ -85,6 +85,9 @@ function App() {
                                 <Tab>
                                     🥦食材成分
                                 </Tab>
+                                <Tab>
+                                    更多功能
+                                </Tab>
                             </TabList>
 
                             <TabPanel>
@@ -96,10 +99,18 @@ function App() {
                             <TabPanel>
                                 <FoodTable />
                             </TabPanel>
+                            <TabPanel>
+                                <p>更多功能正在开发中...</p>
+                                <p>敬请期待！</p>
+                                <p>欢迎提出宝贵意见！</p>
+                            </TabPanel>
                         </Tabs>
                     </FoodDataContext.Provider>
                 )}
             </div>
+            <footer className="App-footer">
+                <p>&copy; 2025 @李瑶瑶种太阳 独立开发</p>
+            </footer>
         </div>
     );
 }

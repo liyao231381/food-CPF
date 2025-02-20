@@ -12,10 +12,10 @@
   flex-direction: column;
   align-items: center;
   justify-content: flex-start;
-  font-size: calc(8px + 1.5vmin);
+  font-size: calc(8px + 1vmin);
   /* 减小字体大小 */
   color: #333;
-  padding: 20px;
+  padding: 10px;
   /* 增加内边距 */
 }
 
@@ -44,7 +44,7 @@
 .content-container {
   width: 90%;
   /* 页面内容宽度 */
-  max-width: 1200px;
+  max-width: 800px;
   /* 最大宽度 */
   margin: 0 auto;
   padding: 20px;
@@ -64,13 +64,13 @@
   display: flex;
   justify-content: center;
   /* 标签居中 */
-  margin: 0 0 20px;
+  margin: 0 0 10px;
   padding: 0;
 }
 
 .react-tabs__tab {
   list-style: none;
-  padding: 10px 20px;
+  padding: 10px 10px;
   cursor: pointer;
   border: none;
   border-bottom: none;
@@ -118,8 +118,8 @@
   }
 
   .react-tabs__tab {
-      padding: 8px 16px;
-      margin: 0 2px;
+      padding: 8px 4px;
+      margin: 0 1px;
   }
 }
 
@@ -137,4 +137,16 @@
 
 .admin-button:hover {
   background-color: rgba(0, 0, 0, 0.1);
+}
+
+.App-footer {
+  min-height: 2rem;
+  align-items: center;
+  justify-content: center;
+  display: flex;
+  background-color: #f4f4f4;
+  /* 更柔和的背景色 */
+  font-size: medium;
+  font-weight: 100;
+  font-family: 'Times New Roman', Times, serif;
 }

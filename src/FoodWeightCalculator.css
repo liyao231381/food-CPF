@@ -4,12 +4,13 @@
     display: flex;
     flex-direction: column;
     align-items: stretch;
-    gap: 1rem;
+    justify-content: center;
+    gap: 2rem;
 }
 
-.input-area {
-    margin-bottom: 1rem;
-}
+/* .input-area {
+    margin-bottom: 0.5rem;
+} */
 
 .input-area label {
     display: block;
@@ -86,7 +87,7 @@
 .result-table th {
     background-color: var(--table-header-background);
     /* 使用 CarbCalculator 的变量 */
-    color: var(--table-header-text-color);
+    color: white;
     /* 使用 CarbCalculator 的变量 */
     font-weight: 600;
     font-size: 1rem;
@@ -103,7 +104,7 @@
 .result-table th:last-child,
 .result-table td:last-child {
     text-align: left;
-    padding-right: 1rem;
+    padding-right: 2rem;
 }
 
 .result-table tr:last-child td {
@@ -162,6 +163,7 @@
         flex-direction: column;
         /* 恢复垂直排列 */
         align-items: stretch;
+        gap: 0.5rem;
     }
 
     .calculate-button {
