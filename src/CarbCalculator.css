@@ -1,4 +1,4 @@
-/* CarbCalculator.css - 修正滑块问题 */
+/* CarbCalculator.css */
 
 /* 颜色变量，方便统一修改主题色 */
 :root {
@@ -39,9 +39,9 @@
     --text: var(--text-color);
     background-color: var(--background-color);
     color: var(--text-color);
-    max-width: 90%;
-    padding: 20px;
-    margin: 20px auto;
+    max-width: 100%; /* 改为 100% */
+    padding: 10px; /* 减小 padding */
+    margin: 10px auto; /* 减小 margin */
     border: none;
     border-radius: 12px;
     scrollbar-width: none;
@@ -60,31 +60,33 @@
 
 .input-group {
     background-color: var(--card-background-color);
-    padding: 2rem;
+    padding: 1rem;
     border-radius: 16px;
     box-shadow: 0 3px 5px -1px rgba(111, 111, 111, 0.15);
-    margin-bottom: 2rem;
+    margin-bottom: 1rem;
 }
 
 .input-row {
-    display: flex;
-    align-items: center;
-    gap: 1.5rem;
-    margin-bottom: 1.5rem;
+    flex-direction: column; /* 默认垂直排列 */
+    align-items: stretch; /* 让子元素占据整个宽度 */
+    gap: 0.5rem;
+    margin-bottom: 1rem;
 }
 
 .input-row label {
-    min-width: 120px;
+    min-width: auto; /* 移除最小宽度限制 */
+    margin-bottom: 0.25rem;
     font-weight: 600;
     color: var(--light-text-color);
-    font-size: medium;
+    font-size: 1rem;
+    text-align: left;
 }
 
 .input-row input[type="number"],
 .input-row input[type="range"] {
     border: 2px solid var(--border-color);
     border-radius: 8px;
-    width: 180px;
+    width: 100%; /* 占据整个宽度 */
     transition: border-color 0.2s ease;
     background-color: var(--card-background-color);
     color: var(--text-color);
@@ -93,7 +95,7 @@
 }
 
 .input-row input[type="number"] {
-    padding: 0.75rem;
+    padding: 0.5rem;
 }
 
 .input-row input[type="number"]:focus,
@@ -103,27 +105,28 @@
     box-shadow: 0 0 0 2px rgba(41, 121, 255, 0.2);
 }
 
+/* 滑块样式 */
 .input-row input[type="range"] {
-    cursor: pointer; /* 确保 cursor 为 pointer */
+    cursor: pointer;
     -webkit-appearance: none;
     appearance: none;
-    height: 24px;
+    height: 18px;
     background: repeating-linear-gradient(to right, #ddd 0, #ddd 5px, transparent 5px, transparent 10px);
     border-radius: 12px;
 }
 
 .input-row input[type="range"]::-webkit-slider-thumb {
-    -webkit-appearance: none; /* 确保 Webkit appearance */
-    appearance: none;        /* 确保 standard appearance */
-    width: 24px;
-    height: 24px;
+    -webkit-appearance: none;
+    appearance: none;
+    width: 18px;
+    height: 18px;
     border-radius: 50%;
     background-color: var(--primary-color);
     cursor: pointer;
     border: 3px solid var(--card-background-color);
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.25);
     transition: transform 0.2s ease;
-    /* pointer-events: auto;  显式设置 pointer-events 为 auto，确保可以交互 (默认值，但可以显式强调) */
+    margin-top: -4px; /* 略微调整垂直位置 */
 }
 
 .input-row input[type="range"]::-webkit-slider-thumb:hover {
@@ -131,15 +134,15 @@
 }
 
 .input-row input[type="range"]::-webkit-slider-runnable-track {
-    height: 24px;
+    height: 18px;
     border-radius: 12px;
     background: linear-gradient(to right, rgb(119, 255, 124), rgb(129, 198, 255), rgb(255, 105, 105), rgb(255, 153, 0) var(--progress), transparent var(--progress));
 }
 
-/* Firefox 滑块 thumb 样式 (添加 Firefox 兼容性) */
+/* Firefox 滑块 thumb 样式 */
 .input-row input[type="range"]::-moz-range-thumb {
-    width: 24px;
-    height: 24px;
+    width: 18px;
+    height: 18px;
     border-radius: 50%;
     background-color: var(--primary-color);
     cursor: pointer;
@@ -152,12 +155,11 @@
     transform: scale(1.1);
 }
 
-/* Firefox 滑块 track 样式 (如果需要更精细的 Firefox 样式，可以添加) */
+/* Firefox 滑块 track 样式 */
 .input-row input[type="range"]::-moz-range-track {
-    height: 24px;
+    height: 18px;
     border-radius: 12px;
     background: repeating-linear-gradient(to right, #ddd 0, #ddd 5px, transparent 5px, transparent 10px);
-    /* 可以考虑添加 background-image 来模拟 Webkit 的颜色渐变效果，如果需要 */
 }
 
 
@@ -180,7 +182,7 @@
 .export-btn {
     background-color: var(--secondary-color);
     color: var(--table-header-text-color);
-    padding: 1rem 2.5rem;
+    padding: 0.75rem 1.5rem;
     border: none;
     border-radius: 12px;
     font-weight: 600;
@@ -188,7 +190,7 @@
     transition: transform 0.2s ease, box-shadow 0.2s ease;
     display: block;
     width: fit-content;
-    font-size: 1.1rem;
+    font-size: 1rem;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
@@ -198,12 +200,13 @@
 }
 
 #buttons .export-hint {
-    font-size: 14px;
+    font-size: 0.75rem;
     color: var(--light-text-color);
     margin-top: 0.5rem;
     margin-bottom: 1.5rem;
 }
 
+/* 表格样式 - 响应式 */
 #result {
     width: 100%;
     border-collapse: collapse;
@@ -212,15 +215,17 @@
     overflow: hidden;
     box-shadow: 0 5px 8px -2px rgba(0, 0, 0, 0.12);
     margin-bottom: 2rem;
+    font-size: 0.8rem;
+    overflow-x: auto;
 }
 
 #result th,
 #result td {
-    padding: 0.75rem 0.5rem;
+    padding: 0.5rem;
     text-align: center;
     color: var(--text-color);
-    font-size: 0.9rem;
     border-bottom: 1px solid var(--border-color);
+    white-space: nowrap;
 }
 
 #result th {
@@ -253,4 +258,30 @@
 
 #result tr:hover {
     background-color: var(--table-row-hover-background);
+}
+
+/* 媒体查询，用于更大的屏幕 */
+@media (min-width: 769px) {
+    #carb-calculator-container {
+        max-width: 90%; /* 恢复原来的最大宽度 */
+        padding: 20px; /* 恢复原来的 padding */
+        margin: 20px auto; /* 恢复原来的 margin */
+    }
+
+    .input-row {
+        flex-direction: row; /* 恢复水平排列 */
+        align-items: center; /* 垂直居中 */
+    }
+
+    .input-row label {
+        min-width: 120px; /* 恢复最小宽度 */
+        margin-bottom: 0; /* 移除 margin-bottom */
+        font-size: medium; /* 恢复字体大小 */
+        text-align: left;
+    }
+
+    .input-row input[type="number"],
+    .input-row input[type="range"] {
+        width: 180px; /* 恢复原来的宽度 */
+    }
 }

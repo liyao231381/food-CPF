@@ -1,9 +1,9 @@
 /* FoodWeightCalculator.css */
 
 .food-weight-calculator-container {
-    max-width: 90%;
-    padding: 20px;
-    margin: 20px auto;
+    max-width: 100%;
+    padding: 10px;
+    margin: 10px auto;
     border: none;
     border-radius: 12px;
     scrollbar-width: none;
@@ -27,9 +27,9 @@
 
 .input-all {
     display: flex;
-    justify-content: center;
-    gap: 1.5rem;
-    margin-bottom: 1.5rem;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 1rem;
 }
 
 .input-area {
@@ -43,12 +43,13 @@
     font-weight: 600;
     text-align: left;
     min-width: 200px;
+     font-size: 1rem;
 }
 
 .input-area input[type="number"],
 .input-area select {
-    width: 200px;
-    padding: 0.75rem;
+    width: 100%;
+    padding: 0.5rem;
     border: 2px solid var(--border-color); /* 使用 CarbCalculator 的变量 */
     border-radius: 8px;
     background-color: var(--card-background-color); /* 使用 CarbCalculator 的变量 */
@@ -64,13 +65,13 @@
 }
 
 .food-weight-calculator-container button {
-    padding: 0.75rem 1.5rem;
+     padding: 0.5rem 1rem;
     border: none;
     border-radius: 12px;
-    background-color: var(--secondary-color); /* 使用 CarbCalculator 的变量 */
-    color: var(--table-header-text-color); /* 使用 CarbCalculator 的变量 */
+    background-color: var(--secondary-color);
+    color: var(--table-header-text-color);
     cursor: pointer;
-    font-size: 1.1rem;
+    font-size: 1rem;
     font-weight: 600;
     transition: transform 0.2s ease, box-shadow 0.2s ease;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
@@ -81,11 +82,35 @@
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.15);
 }
 
+/* 媒体查询 */
+@media (min-width: 769px) {
+    .food-weight-calculator-container {
+        max-width: 90%; /* 恢复原来的最大宽度 */
+        padding: 20px; /* 恢复原来的 padding */
+        margin: 20px auto; /* 恢复原来的 margin */
+    }
+
+    .input-all {
+        flex-direction: row; /* 恢复水平排列 */
+        align-items: center; /* 垂直居中 */
+    }
+
+     .input-area label {
+        text-align: left; /* 左对齐 */
+    }
+
+    .food-weight-calculator-container button {
+        padding: 0.75rem 1.5rem;
+        font-size: 1.1rem;
+    }
+}
+
 .button-row {
     display: flex;
     align-items: center;
-    justify-content: space-between; /* 将子元素分散对齐 */
+    justify-content: space-between;
     margin-top: 10px;
+    margin-top: 1rem;
 }
 
 /* 查询按钮的样式 */
@@ -105,6 +130,7 @@
 .right-buttons {
     display: flex; /* 同样使用 Flexbox 布局 */
     gap: 10px; /* 调整按钮之间的间距 */
+    gap: 0.5rem;
 }
 
 /* 小尺寸按钮的样式 */
@@ -134,15 +160,17 @@
     border-radius: 16px;
     overflow: hidden;
     box-shadow: 0 5px 8px -2px rgba(0, 0, 0, 0.12);
+    font-size: 0.8rem;
+    overflow-x: auto;
 }
 
 .result-table th,
 .result-table td {
-    padding: 0.75rem 0.5rem;
+    padding: 0.5rem;
     text-align: center;
     color: var(--text-color); /* 使用 CarbCalculator 的变量 */
-    font-size: 0.9rem;
     border-bottom: 1px solid var(--border-color); /* 使用 CarbCalculator 的变量 */
+    white-space: nowrap;
 }
 
 .result-table th {

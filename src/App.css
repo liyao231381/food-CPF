@@ -5,32 +5,49 @@
 }
 
 .App-header {
-  background-color: #f0f0f0; /* 或其他你喜欢的背景色 */
-  min-height: 100vh;          /* 占据整个视口高度 */
+  background-color: #f0f0f0;
+  min-height: 100vh;
   display: flex;
-  flex-direction: column;    /* 垂直排列子元素 */
-  align-items: center;        /* 水平居中 */
-  justify-content: flex-start; /* 垂直方向顶部对齐，为下方区域留出空间 */
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
   font-size: calc(10px + 2vmin);
-  color: #333;               /* 或其他你喜欢的文字颜色 */
+  color: #333;
+}
+
+.content-container {
+  width: 100%;
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 0 10px;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column; /* 默认垂直排列 */
+}
+
+/* 媒体查询，针对小屏幕设备 */
+@media (max-width: 768px) {
+  .content-container {
+      flex-direction: column;
+  }
 }
 
 .carb-calculator-section,
 .food-weight-section {
-  width: 100%;               /* 占据整个宽度 */
-  max-width: 960px;           /* 设置一个最大宽度 */
-  margin: 0 auto;            /* 水平居中 */
-  padding: 20px;             /* 增加一些内边距 */
-  box-sizing: border-box;    /* 确保 padding 不会增加元素宽度 */
+  width: 100%;
+  padding: 20px;
+  box-sizing: border-box;
+  /* 移除 max-width，让它们在小屏幕上占据全宽 */
 }
 
+/* 其他样式保持不变 */
 .additional-content-section {
-  width: 100%;               /* 占据整个宽度 */
-  min-height: 200px;          /* 设置一个最小高度 */
-  background-color: #fff;   /* 设置一个背景颜色，方便查看 */
-  padding: 20px;             /* 增加一些内边距 */
-  box-sizing: border-box;    /* 确保 padding 不会增加元素宽度 */
-  margin-top: 20px;          /* 增加与上方区域的间距 */
+  width: 100%;
+  min-height: 200px;
+  background-color: #fff;
+  padding: 20px;
+  box-sizing: border-box;
+  margin-top: 20px;
 }
 
 .edit-button {

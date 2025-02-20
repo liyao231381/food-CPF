@@ -1,5 +1,5 @@
 // FoodWeightCalculator.js
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import './FoodWeightCalculator.css';
 import AddFoodModal from './AddFoodModal';
 import EditFoodModal from './EditFoodModal';
@@ -12,81 +12,54 @@ const FoodWeightCalculator = () => {
     const [isAddModalOpen, setIsAddModalOpen] = useState(false);
     const [isEditModalOpen, setIsEditModalOpen] = useState(false);
     const [selectedFood, setSelectedFood] = useState(null);
-    const [isLoading, setIsLoading] = useState(false); // 添加加载状态
+    const [isLoading, setIsLoading] = useState(false);
+
+    // 使用 useCallback 包裹 fetchFoodData
+    const fetchFoodData = useCallback(async () => {
+        setIsLoading(true);
+        try {
+            const response = await fetch('/api/foodData');
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+            const data = await response.json();
+
+            const groupedData = {
+                carbon: data.filter(item => item.type === '碳水来源'),
+                protein: data.filter(item => item.type === '蛋白质来源'),
+                fat: data.filter(item => item.type === '脂肪来源')
+            };
+
+            setFoodData(groupedData);
+        } catch (error) {
+            console.error("Could not fetch food data:", error);
+            // 可以在这里设置一个错误状态，并在界面上显示错误信息
+        } finally {
+            setIsLoading(false);
+        }
+    }, []); // 空依赖数组，确保 fetchFoodData 只创建一次
 
     useEffect(() => {
-        const fetchFoodData = async () => {
-            setIsLoading(true); // 开始加载时设置状态为 true
-            try {
-                const response = await fetch('/api/foodData');
-                if (!response.ok) {
-                    throw new Error(`HTTP error! status: ${response.status}`);
-                }
-                const data = await response.json();
-
-                const groupedData = {
-                    carbon: data.filter(item => item.type === '碳水来源'),
-                    protein: data.filter(item => item.type === '蛋白质来源'),
-                    fat: data.filter(item => item.type === '脂肪来源')
-                };
-
-                setFoodData(groupedData);
-            } catch (error) {
-                console.error("Could not fetch food data:", error);
-                // 可以在这里设置一个错误状态，并在界面上显示错误信息
-            } finally {
-                setIsLoading(false); // 无论成功与否，加载完成后都设置为 false
-            }
-        };
-
         fetchFoodData();
-    }, []); // 移除 isAddModalOpen 和 isEditModalOpen 依赖项
+    }, [fetchFoodData]); // 依赖于 useCallback 返回的 fetchFoodData
 
     const calculateWeight = () => {
         setIsLoading(true);
-        try {
-            const selectedFoodList = foodData[foodType];
-            if (!selectedFoodList) {
-                setResults([{ foodname: '', weight: '未找到该类型的食物数据。' }]);
-                return;
-            }
-
-            if (isNaN(nutrientAmount)) {
-                setResults([{ foodname: '', weight: '请输入有效的营养素需求量。' }]);
-                return;
-            }
-
-            const newResults = selectedFoodList.map(food => {
-                let nutrientContent;
-                switch (foodType) {
-                    case "carbon":
-                        nutrientContent = food.carbon;
-                        break;
-                    case "protein":
-                        nutrientContent = food.protein;
-                        break;
-                    case "fat":
-                        nutrientContent = food.fat;
-                        break;
-                    default:
-                        nutrientContent = 0;
-                }
-
-                let weight = '无法提供';
-                if (nutrientContent > 0) {
-                    weight = ((nutrientAmount / nutrientContent) * 100).toFixed(2);
-                }
-
-                return { foodname: food.foodname, weight: weight };
-            });
-
-            setResults(newResults);
-        } catch (error) {
-            console.error("计算重量失败:", error);
-            setResults([{ foodname: '', weight: '计算重量时出错。' }]); // 设置错误信息
-        } finally {
-            setIsLoading(false); // 确保在计算完成后停止加载
+        const selectedFoodList = foodData[foodType];
+        if (!selectedFoodList || isNaN(nutrientAmount)) {
+            setResults([{ foodname: '', weight: '输入有误或数据不足。' }]);
+            setIsLoading(false);
+            return;
         }
+
+        const newResults = selectedFoodList.map(food => {
+            const nutrientContent = food[foodType] || 0;  // 简化
+            const weight = nutrientContent > 0 ? ((nutrientAmount / nutrientContent) * 100).toFixed(2) : '无法提供';
+            return { foodname: food.foodname, weight };
+        });
+
+        setResults(newResults);
+        setIsLoading(false);
     };
 
     const handleOpenAddModal = () => {
