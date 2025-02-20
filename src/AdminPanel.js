@@ -66,21 +66,21 @@ function AdminPanel() {
                 <div className="header-container">
                     {/* 返回主页按钮 */}
                     <Link to="/" className="home-button">
-                        返回主页
+                        返回
                     </Link>
-                    <h1>欢迎来到管理面板</h1>
+                    <h1>管理面板</h1>
                     {/* 退出登录按钮 */}
                     <button onClick={handleLogout} className="logout-button">
-                        退出登录
+                        退出
                     </button>
                 </div>
             </header>
             <main className="admin-main">
-                <p>在这里，您可以管理和维护您的应用程序。</p>
+                <p>暂无内容</p>
                 {/* 在这里添加管理面板的具体内容 */}
             </main>
             <footer className="admin-footer">
-                <p>&copy; 2024 您的应用程序</p>
+                <p>&copy; @李瑶瑶种太阳 独立开发</p>
             </footer>
         </div>
     );
