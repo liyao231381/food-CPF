@@ -117,9 +117,10 @@
     background-color: var(--secondary-color);
     /* 使用你定义的变量 */
     color: white;
+    font-size: 13px;
     font-weight: bold;
     border: none;
-    padding: 10px;
+    padding: 4px;
     text-align: center;
     cursor: pointer;
     outline: none;
@@ -136,11 +137,22 @@
 .tab-button.active {
     background-color: #ffa500;
     /* 选中的标签背景色变为橙色 */
-    font-size: large;
+    font-size: 16px;
 }
 
 /* 表头文字颜色 */
 .header-row th button {
     color: white;
     /* 将表头文字颜色改为白色 */
+}
+
+/* 搜索框样式 */
+.food-search-input {
+    width: 100%;
+    padding: 8px;
+    margin-bottom: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+    font-size: 14px;
 }

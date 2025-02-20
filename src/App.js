@@ -77,13 +77,13 @@ function App() {
                         <Tabs>
                             <TabList>
                                 <Tab>
-                                    🧮食材重量计算器
+                                    🧮食材重量
                                 </Tab>
                                 <Tab>
-                                    💪碳循环饮食计算器
+                                    💪碳循环饮食
                                 </Tab>
                                 <Tab>
-                                    🥦食材成分表
+                                    🥦食材成分
                                 </Tab>
                             </TabList>
 
