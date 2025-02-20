@@ -1,51 +1,22 @@
 // FoodWeightCalculator.js
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useContext, useCallback, useEffect } from 'react';
 import './FoodWeightCalculator.css';
-import AddFoodModal from './AddFoodModal';
 import EditFoodModal from './EditFoodModal';
+import { FoodDataContext } from './App'; // 引入 FoodDataContext
 
 const FoodWeightCalculator = () => {
+    const foodData = useContext(FoodDataContext); // 使用 useContext 获取 foodData
     const [nutrientAmount, setNutrientAmount] = useState(50);
     const [foodType, setFoodType] = useState('carbon');
     const [results, setResults] = useState([]);
-    const [foodData, setFoodData] = useState({ carbon: [], protein: [], fat: [] });
-    const [isAddModalOpen, setIsAddModalOpen] = useState(false);
     const [isEditModalOpen, setIsEditModalOpen] = useState(false);
     const [selectedFood, setSelectedFood] = useState(null);
     const [isLoading, setIsLoading] = useState(false);
 
-    // 使用 useCallback 包裹 fetchFoodData
-    const fetchFoodData = useCallback(async () => {
+    // 使用 useCallback 避免在每次渲染时都创建新的函数实例
+    const calculateWeight = useCallback(() => {
         setIsLoading(true);
-        try {
-            const response = await fetch('/api/foodData');
-            if (!response.ok) {
-                throw new Error(`HTTP error! status: ${response.status}`);
-            }
-            const data = await response.json();
-
-            const groupedData = {
-                carbon: data.filter(item => item.type === '碳水来源'),
-                protein: data.filter(item => item.type === '蛋白质来源'),
-                fat: data.filter(item => item.type === '脂肪来源')
-            };
-
-            setFoodData(groupedData);
-        } catch (error) {
-            console.error("Could not fetch food data:", error);
-            // 可以在这里设置一个错误状态，并在界面上显示错误信息
-        } finally {
-            setIsLoading(false);
-        }
-    }, []); // 空依赖数组，确保 fetchFoodData 只创建一次
-
-    useEffect(() => {
-        fetchFoodData();
-    }, [fetchFoodData]); // 依赖于 useCallback 返回的 fetchFoodData
-
-    const calculateWeight = () => {
-        setIsLoading(true);
-        const selectedFoodList = foodData[foodType];
+        const selectedFoodList = foodData ? foodData.filter(item => item.type === getFoodTypeName(foodType)) : [];
         if (!selectedFoodList || isNaN(nutrientAmount)) {
             setResults([{ foodname: '', weight: '输入有误或数据不足。' }]);
             setIsLoading(false);
@@ -53,21 +24,26 @@ const FoodWeightCalculator = () => {
         }
 
         const newResults = selectedFoodList.map(food => {
-            const nutrientContent = food[foodType] || 0;  // 简化
+            const nutrientContent = food[foodType] || 0;
             const weight = nutrientContent > 0 ? ((nutrientAmount / nutrientContent) * 100).toFixed(2) : '无法提供';
             return { foodname: food.foodname, weight };
         });
 
         setResults(newResults);
         setIsLoading(false);
-    };
+    }, [foodData, foodType, nutrientAmount]);
 
-    const handleOpenAddModal = () => {
-        setIsAddModalOpen(true);
-    };
-
-    const handleCloseAddModal = () => {
-        setIsAddModalOpen(false);
+    const getFoodTypeName = (type) => {
+        switch (type) {
+            case 'carbon':
+                return '碳水来源';
+            case 'protein':
+                return '蛋白质来源';
+            case 'fat':
+                return '脂肪来源';
+            default:
+                return '';
+        }
     };
 
     const handleOpenEditModal = (food) => {
@@ -80,13 +56,17 @@ const FoodWeightCalculator = () => {
         setIsEditModalOpen(false);
     };
 
+    // 使用 useEffect 监听 nutrientAmount 的变化，并在变化时触发 calculateWeight
+    useEffect(() => {
+        calculateWeight();
+    }, [calculateWeight]);
+
     return (
-        <div className="food-weight-calculator-container">
-            <h2>食材重量计算器</h2>
+        <>
             <div className="input-all">
                 <div className="input-area">
                     <label htmlFor="foodType">选择食材类型:</label>
-                    <select id="foodType" value={foodType} onChange={e => setFoodType(e.target.value)}>
+                    <select id="foodType" value={foodType} onChange={e => {setFoodType(e.target.value); calculateWeight()}}>
                         <option value="carbon">碳水来源</option>
                         <option value="protein">蛋白质来源</option>
                         <option value="fat">脂肪来源</option>
@@ -105,25 +85,6 @@ const FoodWeightCalculator = () => {
                 </div>
             </div>
 
-            <div className="button-row">
-                <button className="calculate-button" onClick={calculateWeight} disabled={isLoading}>
-                    {isLoading ? '查询中...' : '查询'}
-                </button>
-                <div className="right-buttons">
-                    <button className="add-food-button small-button" onClick={handleOpenAddModal}>添加食材</button>
-                    <button
-                        className="edit-food-button small-button"
-                        onClick={() =>
-                            results.length > 0 ? handleOpenEditModal(results[0]) : alert("请先查询结果")
-                        }
-                        disabled={isLoading}
-                    >
-                        修改食材
-                    </button>
-                </div>
-            </div>
-
-            <h3>计算结果</h3>
             {isLoading ? (
                 <p>加载中...</p>
             ) : (
@@ -145,9 +106,8 @@ const FoodWeightCalculator = () => {
                 </table>
             )}
 
-            <AddFoodModal isOpen={isAddModalOpen} onClose={handleCloseAddModal} />
             <EditFoodModal isOpen={isEditModalOpen} onClose={handleCloseEditModal} selectedFood={selectedFood} />
-        </div>
+        </>
     );
 };
 

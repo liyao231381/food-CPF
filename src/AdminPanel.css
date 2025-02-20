@@ -1,0 +1,88 @@
+/* AdminPanel.css */
+
+.admin-panel {
+    font-family: Arial, sans-serif;
+    background-color: #f9f9f9;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* 居中对齐 */
+    justify-content: center; /* 垂直居中 */
+}
+
+.admin-header {
+    background-color: #333;
+    color: white;
+    text-align: center;
+    padding: 20px;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+/* 头部容器样式 */
+.admin-header .header-container {
+    display: flex;
+    justify-content: space-between; /* 两端对齐 */
+    align-items: center; /* 垂直居中 */
+}
+
+.admin-main {
+    flex: 1;
+    padding: 20px;
+    text-align: center; /* 居中对齐 */
+}
+
+.admin-main input[type="password"] {
+    padding: 10px;
+    margin: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.admin-main button {
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.admin-footer {
+    background-color: #333;
+    color: white;
+    text-align: center;
+    padding: 10px;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+/* 退出登录按钮样式 */
+.logout-button {
+    padding: 8px 12px;
+    background-color: #dc3545;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-left: 20px;
+}
+
+.logout-button:hover {
+    background-color: #c82333;
+}
+
+/* 返回主页按钮样式 */
+.home-button {
+    padding: 8px 12px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    text-decoration: none; /* 移除下划线 */
+}
+
+.home-button:hover {
+    background-color: #0056b3;
+}

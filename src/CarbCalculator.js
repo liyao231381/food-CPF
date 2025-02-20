@@ -102,12 +102,13 @@ const CarbCalculator = () => {
 
         const totalRow = table.insertRow();
         totalRow.insertCell().textContent = "";
-        totalRow.insertCell().textContent = "总量";
-        totalRow.insertCell().textContent = weeklyCarb.toFixed(2);
-        totalRow.insertCell().textContent = weeklyProtein.toFixed(2);
-        totalRow.insertCell().textContent = weeklyFat.toFixed(2);
+        totalRow.insertCell().innerHTML = "<strong>总量</strong>"; // 加粗“总量”
+        totalRow.insertCell().innerHTML = "<strong>" + weeklyCarb.toFixed(2) + "</strong>";
+        totalRow.insertCell().innerHTML = "<strong>" + weeklyProtein.toFixed(2) + "</strong>";
+        totalRow.insertCell().innerHTML = "<strong>" + weeklyFat.toFixed(2) + "</strong>";
         const totalCalories = (weeklyCarb * 4) + (weeklyProtein * 4) + (weeklyFat * 9);
-        totalRow.insertCell().textContent = totalCalories.toFixed(2) + " Kcal";
+        totalRow.insertCell().innerHTML = "<strong>" + totalCalories.toFixed(2) + " Kcal</strong>";
+
     };
 
     const exportToPNG = () => {
@@ -143,13 +144,11 @@ const CarbCalculator = () => {
     }, []);
 
     return (
-        <div>
-            <div id="carb-calculator-container">
-                <h2>🥦 碳循环饮食计算器 💪</h2>
+        <>
                 <div className="input-group">
                     <div className="input-row">
                         <label htmlFor="weight" className="weight-label">体重（KG）</label>
-                        <input type="number" id="weight" name="weight" placeholder="请输入体重" onInput={() => calculate()} />
+                        <input type="number" id="weight" name="weight" placeholder="请输入体重" defaultValue={80} onInput={() => calculate()} />
                     </div>
                     {/* 体质类型滑块 */}
                     <div className="input-row">
@@ -184,23 +183,23 @@ const CarbCalculator = () => {
                         </div>
                     </div>
                 </div>
-                <div id="buttons">
-                    <button className="export-btn" onClick={exportToPNG}>
-                        导出表格图片</button>
-                    <div className="export-hint">手机切换为横屏再点击导出，图片更宽</div>
-                </div>
+                <p className="table-description">结果为当日摄入需求总量，请结合饮食习惯自行分配每餐内容。建议蛋白质摄入量均分，且间隔不超过三小时</p>
                 <table id="result" ref={resultTableRef}>
                     <tr className="center-text">
                         <th>日期</th>
-                        <th>训练部位</th>
-                        <th>碳水（g）</th>
-                        <th>蛋白质（g）</th>
-                        <th>脂肪（g）</th>
-                        <th>饮食建议</th>
+                        <th>部位</th>
+                        <th>碳水</th>
+                        <th>蛋白质</th>
+                        <th>脂肪</th>
+                        <th>建议</th>
                     </tr>
                 </table>
-            </div>
-        </div>
+                <div id="buttons">
+                    <button className="export-btn" onClick={exportToPNG}>
+                        导出表格图片</button>
+                    <div className="export-hint">请用浏览器打开才能导出，抖音、微信等软件<strong style={{ color: 'red' }}>内置浏览器不支持导出</strong></div>
+                </div>
+        </>
     );
 };
 

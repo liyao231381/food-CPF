@@ -31,32 +31,9 @@
 }
 
 /* 计算器容器 */
-#carb-calculator-container {
-    --primary: var(--primary-color);
-    --secondary: var(--secondary-color);
-    --accent: var(--accent-color);
-    --background: var(--background-color);
-    --text: var(--text-color);
-    background-color: var(--background-color);
-    color: var(--text-color);
-    max-width: 100%; /* 改为 100% */
-    padding: 10px; /* 减小 padding */
-    margin: 10px auto; /* 减小 margin */
-    border: none;
-    border-radius: 12px;
-    scrollbar-width: none;
-    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.08);
-}
+/* 移除 #carb-calculator-container 样式 */
 
-#carb-calculator-container h2 {
-    color: var(--primary-color);
-    text-align: center;
-    margin-bottom: 1.5rem;
-    font-weight: 700;
-    letter-spacing: -0.025em;
-    font-size: 2rem;
-}
+/* 移除 #carb-calculator-container h2 样式 */
 
 .input-group {
     background-color: var(--card-background-color);
@@ -64,17 +41,22 @@
     border-radius: 16px;
     box-shadow: 0 3px 5px -1px rgba(111, 111, 111, 0.15);
     margin-bottom: 1rem;
+    text-align: left;
+    /* 宽屏状态下input-group中的内容左对齐 */
 }
 
 .input-row {
-    flex-direction: column; /* 默认垂直排列 */
-    align-items: stretch; /* 让子元素占据整个宽度 */
+    flex-direction: column;
+    /* 默认垂直排列 */
+    align-items: stretch;
+    /* 让子元素占据整个宽度 */
     gap: 0.5rem;
     margin-bottom: 1rem;
 }
 
 .input-row label {
-    min-width: auto; /* 移除最小宽度限制 */
+    min-width: auto;
+    /* 移除最小宽度限制 */
     margin-bottom: 0.25rem;
     margin-right: 10px;
     font-weight: 600;
@@ -87,7 +69,8 @@
 .input-row input[type="range"] {
     border: 2px solid var(--border-color);
     border-radius: 8px;
-    width: 100%; /* 占据整个宽度 */
+    width: 100%;
+    /* 占据整个宽度 */
     transition: border-color 0.2s ease;
     background-color: var(--card-background-color);
     color: var(--text-color);
@@ -127,7 +110,7 @@
     border: 3px solid var(--card-background-color);
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.25);
     transition: transform 0.2s ease;
-    margin-top: -4px; /* 略微调整垂直位置 */
+    /* margin-top: -4px; 移除 margin-top */
 }
 
 .input-row input[type="range"]::-webkit-slider-thumb:hover {
@@ -163,7 +146,6 @@
     background: repeating-linear-gradient(to right, #ddd 0, #ddd 5px, transparent 5px, transparent 10px);
 }
 
-
 #trainingLevelValue,
 #bodyTypeValue {
     min-width: 80px;
@@ -177,13 +159,13 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    margin-bottom: 2rem;
+    margin-bottom: 0.5rem; /* 缩小按钮与表格之间的距离 */
 }
 
 .export-btn {
-    background-color: var(--secondary-color);
-    color: var(--table-header-text-color);
-    padding: 0.75rem 1.5rem;
+    background-color: #ffa500; /* 按钮颜色为#ffa500 */
+    color: white; /* 文字改为白色 */
+    padding: 0.5rem 1rem; /* 大小减小 */
     border: none;
     border-radius: 12px;
     font-weight: 600;
@@ -191,14 +173,16 @@
     transition: transform 0.2s ease, box-shadow 0.2s ease;
     display: block;
     width: fit-content;
-    font-size: 1rem;
+    font-size: 0.9rem; /* 大小减小 */
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
-.export-btn:hover {
-    transform: translateY(-2px);
+.export-btn:hover,
+.export-btn:focus {
+    transform: scale(1.05); /* 点击和悬停效果改为放大1.05倍 */
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.15);
 }
+
 
 #buttons .export-hint {
     font-size: 0.75rem;
@@ -212,7 +196,7 @@
     width: 100%;
     border-collapse: collapse;
     background-color: var(--card-background-color);
-    border-radius: 16px;
+    /* border-radius: 16px;  移除表格的圆角 */
     box-shadow: 0 5px 8px -2px rgba(0, 0, 0, 0.12);
     margin-bottom: 2rem;
     font-size: 0.8rem;
@@ -230,7 +214,7 @@
 
 #result th {
     background-color: var(--table-header-background);
-    color: var(--table-header-text-color);
+    color: white; /* 文字改为白色 */
     font-weight: 600;
     font-size: 1rem;
     border-bottom: 2px solid var(--primary-color);
@@ -262,26 +246,84 @@
 
 /* 媒体查询，用于更大的屏幕 */
 @media (min-width: 769px) {
-    #carb-calculator-container {
-        max-width: 90%; /* 恢复原来的最大宽度 */
-        padding: 20px; /* 恢复原来的 padding */
-        margin: 20px auto; /* 恢复原来的 margin */
+    /*#carb-calculator-container {*/
+    /*    max-width: 90%;*/
+    /*    !* 恢复原来的最大宽度 *!*/
+    /*    padding: 20px;*/
+    /*    !* 恢复原来的 padding *!*/
+    /*    margin: 20px auto;*/
+    /*    !* 恢复原来的 margin *!*/
+    /*}*/
+
+    .input-group {
+        text-align: left;
+        /* 宽屏状态下input-group中的内容左对齐 */
     }
 
     .input-row {
-        flex-direction: row; /* 恢复水平排列 */
-        align-items: center; /* 垂直居中 */
+        flex-direction: row;
+        /* 恢复水平排列 */
+        align-items: center;
+        /* 垂直居中 */
+        flex-wrap: nowrap;
+        /* input-row中的内容不换行，都在同一行 */
     }
 
+
+    /* 修改体质类型与训练强度 */
+    .input-row:not(:first-child) {
+        display: flex;
+        /* 使用 Flexbox 布局 */
+        align-items: center;
+        /* 垂直居中对齐 */
+    }
+
+    .input-row:not(:first-child) label {
+        flex: 1;
+        /* label 占据一份 */
+        text-align: left;
+    }
+
+    .input-row:not(:first-child) .value-display {
+        flex: 1;
+        /* value 占据一份 */
+        text-align: center;
+        /* 文本居中 */
+    }
+
+    .input-row:not(:first-child) .range-container {
+        flex: 3;
+        /* 滑块占据三份 */
+        width: auto;
+    }
+
+
     .input-row label {
-        min-width: 120px; /* 恢复最小宽度 */
-        margin-bottom: 0; /* 移除 margin-bottom */
-        font-size: medium; /* 恢复字体大小 */
+        min-width: 120px;
+        /* 恢复最小宽度 */
+        margin-bottom: 0;
+        /* 移除 margin-bottom */
+        font-size: medium;
+        /* 恢复字体大小 */
         text-align: left;
     }
 
     .input-row input[type="number"],
     .input-row input[type="range"] {
-        width: 180px; /* 恢复原来的宽度 */
+        width: 180px;
+        /* 恢复原来的宽度 */
+    }
+}
+
+/* 移动端样式 */
+@media (max-width: 768px) {
+    .input-row:first-child label {
+        text-align: left;
+        /* “体重（KG）”靠左排列 */
+    }
+
+    .input-row:first-child input[type="number"] {
+        width: calc(100% - 12px);
+        /* 输入框宽度与滑块保持一致 */
     }
 }

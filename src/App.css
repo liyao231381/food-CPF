@@ -5,64 +5,134 @@
 }
 
 .App-header {
-  background-color: #f0f0f0;
-  min-height: 100vh;
+  background-color: #f4f4f4;
+  /* 更柔和的背景色 */
+  /*min-height: 100vh;*/
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: flex-start;
-  font-size: calc(10px + 2vmin);
+  font-size: calc(8px + 1.5vmin);
+  /* 减小字体大小 */
   color: #333;
+  padding: 20px;
+  /* 增加内边距 */
+}
+
+/* 头部容器样式 */
+.header-container {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+  /* 两端对齐 */
+  align-items: center;
+  /* 垂直居中 */
+}
+
+/* 头部标题样式 */
+.header-title {
+  text-align: center;
+  /* 居中显示 */
+  flex-grow: 1;
+  /* 占据剩余空间 */
+  margin: 0;
+  /* 移除默认边距 */
 }
 
 .content-container {
-  width: 100%;
-  max-width: 960px;
+  width: 90%;
+  /* 页面内容宽度 */
+  max-width: 1200px;
+  /* 最大宽度 */
   margin: 0 auto;
-  padding: 0 10px;
+  padding: 20px;
   box-sizing: border-box;
+  background-color: #fff;
+  /* 白色背景 */
+  border-radius: 8px;
+  /* 圆角边框 */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  /* 阴影效果 */
+  font-size: calc(9px + 1vmin);
+  /* 减小字体大小 */
+}
+
+/* 调整 react-tabs 的样式 */
+.react-tabs__tab-list {
   display: flex;
-  flex-direction: column; /* 默认垂直排列 */
+  justify-content: center;
+  /* 标签居中 */
+  margin: 0 0 20px;
+  padding: 0;
+}
+
+.react-tabs__tab {
+  list-style: none;
+  padding: 10px 20px;
+  cursor: pointer;
+  border: 1px solid #ccc;
+  border-bottom: none;
+  background: #eee;
+  border-radius: 5px 5px 0 0;
+  margin: 0 5px;
+  font-size: calc(9px + 0.8vmin);
+  /* 减小字体大小 */
+  font-weight: bold;
+  /* 加粗文字 */
+}
+
+.react-tabs__tab--selected {
+  background-color: #ffa500;
+  /* 选中的背景颜色为橙色 */
+  border-color: #aaa;
+  color: #222;
+}
+
+.react-tabs__tab:focus {
+  outline: none;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+}
+
+.react-tabs__tabpanel {
+  padding: 20px;
+  background: #fff;
+  border: 1px solid #aaa;
+  border-radius: 0 0 5px 5px;
+  font-size: calc(9px + 0.8vmin);
+  /* 减小字体大小 */
+}
+
+.react-tabs__tabpanel--selected {
+  display: block;
 }
 
 /* 媒体查询，针对小屏幕设备 */
 @media (max-width: 768px) {
   .content-container {
-      flex-direction: column;
+      width: 100%;
+      padding: 10px;
+  }
+
+  .react-tabs__tab {
+      padding: 8px 16px;
+      margin: 0 2px;
   }
 }
 
-.carb-calculator-section,
-.food-weight-section {
-  width: 100%;
-  padding: 20px;
-  box-sizing: border-box;
-  /* 移除 max-width，让它们在小屏幕上占据全宽 */
-}
-
-/* 其他样式保持不变 */
-.additional-content-section {
-  width: 100%;
-  min-height: 200px;
-  background-color: #fff;
-  padding: 20px;
-  box-sizing: border-box;
-  margin-top: 20px;
-}
-
-.edit-button {
-  position: absolute;
-  top: 10px;
-  right: 10px;
-  padding: 8px 12px;
+/* 管理面板按钮的样式 */
+.admin-button {
+  display: inline-block;
+  padding: 10px 20px;
   background-color: #007bff;
   color: white;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
   text-decoration: none;
+  border-radius: 5px;
+  font-size: calc(9px + 0.8vmin);
+  /* 减小字体大小 */
 }
 
-.edit-button:hover {
+.admin-button:hover {
   background-color: #0056b3;
 }
