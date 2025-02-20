@@ -22,11 +22,11 @@ const CarbCalculator = () => {
         range.style.setProperty('--progress', progress + '%');
         let bodyTypeLabel = "";
         if (range.value >= 2 && range.value <= 2.2) {
-            bodyTypeLabel = "内胚型（易胖）";
+            bodyTypeLabel = "  内胚型（易胖）";
         } else if (range.value >= 2.3 && range.value <= 2.6) {
-            bodyTypeLabel = "中胚型（胖瘦）";
+            bodyTypeLabel = "  中胚型（胖瘦）";
         } else if (range.value >= 2.7 && range.value <= 3) {
-            bodyTypeLabel = "外胚型（易瘦）";
+            bodyTypeLabel = "  外胚型（易瘦）";
         }
         document.getElementById('bodyTypeValue').textContent = bodyTypeLabel;
     };

@@ -76,6 +76,7 @@
 .input-row label {
     min-width: auto; /* 移除最小宽度限制 */
     margin-bottom: 0.25rem;
+    margin-right: 10px;
     font-weight: 600;
     color: var(--light-text-color);
     font-size: 1rem;
@@ -212,7 +213,7 @@
     border-collapse: collapse;
     background-color: var(--card-background-color);
     border-radius: 16px;
-    overflow: hidden;
+    overflow: scroll;
     box-shadow: 0 5px 8px -2px rgba(0, 0, 0, 0.12);
     margin-bottom: 2rem;
     font-size: 0.8rem;
