@@ -99,6 +99,7 @@
 .result-table td:first-child {
     text-align: left;
     padding-left: 1rem;
+    font-weight: bold;
 }
 
 .result-table th:last-child,

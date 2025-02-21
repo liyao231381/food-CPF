@@ -491,7 +491,6 @@ function FoodDataEditor() {
                             <button className="edit" onClick={handleUpdateFood} disabled={loading}>
                                 {loading ? '修改中...' : '修改'}
                             </button>
-                            <button className="delete" onClick={handleCloseEditModal} disabled={loading}>关闭</button>
                         </div>
                          {loading && <div className="loading-spinner"></div>}
                     </div>
@@ -502,8 +501,7 @@ function FoodDataEditor() {
             {deleteModalOpen && (
                 <div className="modal" >
                     <div className="modal-content">
-                        <span className="close" onClick={handleCloseDeleteModal}>&times;</span>
-                        <p>确定要删除 {selectedFood.foodname} 吗?</p>
+                        <h3>确定要删除 {selectedFood.foodname} 吗?</h3>
                         <div className="buttons">
                             <button className="delete" onClick={handleDeleteFood} disabled={loading}>
                                 {loading ? '删除中...' : '确认'}
@@ -519,7 +517,6 @@ function FoodDataEditor() {
             {addModalOpen && (
                 <div className="modal" >
                     <div className="modal-content">
-                        <span className="close" onClick={handleCloseAddModal}>&times;</span>
                         <h2>添加食材</h2>
                         <label>食材名称:</label>
                         <input

@@ -7,6 +7,7 @@ import CarbCalculator from './CarbCalculator';
 import FoodWeightCalculator from './FoodWeightCalculator';
 import FoodTable from './FoodTable'; // 引入食材成分表组件
 import './App.css';
+import { Analytics } from '@vercel/analytics/react';
 
 // 创建一个全局的 context 来共享 foodData
 export const FoodDataContext = React.createContext(null);
@@ -130,6 +131,7 @@ function App() {
             <footer className="App-footer">
                 <p>&copy; 2025 @李瑶瑶种太阳 独立开发</p>
             </footer>
+            <Analytics />
         </div>
     );
 }

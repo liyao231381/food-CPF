@@ -195,8 +195,12 @@ const CarbCalculator = () => {
                     </tr>
                 </table>
                 <div id="buttons">
-                    <button className="export-btn" onClick={exportToPNG}>
-                        导出表格图片</button>
+                    <div className='button-container'>
+                    <a href="https://design.liyao.sbs/posts/tanxunhuan" className="link-btn" target="_blank" rel="noopener noreferrer">
+                        碳循环原理
+                    </a>
+                        <button className="export-btn" onClick={exportToPNG}>导出表格图片</button>
+                    </div>
                     <div className="export-hint">请用浏览器打开才能导出，抖音、微信等软件<strong style={{ color: 'red' }}>内置浏览器不支持导出</strong></div>
                 </div>
         </>

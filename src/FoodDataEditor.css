@@ -3,12 +3,13 @@
 /* 模态框背景 */
 .modal {
     position: fixed;
-    top: 10%;
+    top: 50%; /* 使模态框充满整个屏幕 */
     left: 50%;
-    transform: translateX(-50%);
-    max-width: 500px;
-    height: fit-content;
-    background: none; /* 更深的背景 */
+    transform: translate(-50%, -50%);
+    width: 100%;
+    max-width: 800px;
+    height: 100%;
+    background: none; /* 半透明背景 */
     display: flex;
     justify-content: center; /* 水平居中 */
     align-items: center; /* 垂直居中 */
@@ -23,11 +24,18 @@
     background-color: white;
     padding: 30px; /* 增加内边距 */
     border-radius: 12px; /* 更圆的边角 */
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3); /* 更强的阴影效果 */
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.5); /* 更强的阴影效果 */
     position: relative;
     width: 90%; /* 更宽的模态框 */
     max-width: 500px; /* 限制最大宽度 */
     animation: fadeIn 0.3s ease; /* 动画效果 */
+}
+
+label {
+    display: block; /* 使标签成为块级元素 */
+    margin-bottom: 5px; /* 标签下方的间距 */
+    font-weight: bold; /* 标签加粗 */
+    text-align: left; /* 确保文本左对齐 */
 }
 
 /* 关闭按钮 */
@@ -35,7 +43,7 @@
     position: absolute;
     top: 15px; /* 调整位置 */
     right: 15px;
-    font-size: 24px; /* 更大的关闭按钮 */
+    font-size: 28px; /* 更大的关闭按钮 */
     color: #ff0000; /* 红色 */
     cursor: pointer;
     transition: color 0.3s; /* 过渡效果 */
@@ -48,7 +56,7 @@
 /* 标题样式 */
 h2 {
     margin: 0 0 20px; /* 标题下边距 */
-    font-size: 1.5rem; /* 更大的字体 */
+    font-size: 1.8rem; /* 更大的字体 */
     color: #333; /* 标题颜色 */
 }
 
@@ -57,12 +65,16 @@ input[type="text"],
 input[type="number"],
 select {
     width: calc(100% - 30px); /* 100% 宽度 */
-    padding: 10px; /* 内边距 */
+    padding: 12px; /* 增加内边距 */
     margin: 10px 0; /* 上下外边距 */
-    border: 1px solid #ccc; /* 边框 */
+    border: 2px solid #ccc; /* 边框 */
     border-radius: 8px; /* 圆角 */
     font-size: 1rem; /* 字体大小 */
-    transition: border-color 0.3s; /* 边框颜色过渡 */
+    transition: border-color 0.3s, box-shadow 0.3s; /* 边框颜色和阴影过渡 */
+}
+
+select {
+    width: 100%; /* 宽度为 100% */
 }
 
 input[type="text"]:focus,
@@ -70,6 +82,7 @@ input[type="number"]:focus,
 select:focus {
     border-color: #2979FF; /* 聚焦时的边框颜色 */
     outline: none; /* 移除默认外框 */
+    box-shadow: 0 0 5px rgba(41, 121, 255, 0.5); /* 聚焦时的阴影效果 */
 }
 
 .buttons {
@@ -82,13 +95,17 @@ select:focus {
 button {
     border: none; /* 移除边框 */
     border-radius: 4px; /* 圆角 */
-    padding: 4px 6px; /* 减小内边距 */
-    font-size: 0.8rem; /* 减小字体大小 */
-    font-weight: bold; /* 加粗 */
+    padding: 4px 8px; /* 增加内边距 */
+    font-size: 0.8rem; /* 字体大小 */
+    font-weight: light; /* 加粗 */
     cursor: pointer; /* 鼠标指针 */
-    transition: background-color 0.3s; /* 背景色过渡 */
+    transition: background-color 0.3s, transform 0.2s; /* 背景色和缩放过渡 */
     color: white; /* 统一文字颜色为白色 */
     margin-right: 4px;
+}
+
+button:hover {
+    transform: scale(1.05); /* 鼠标悬停时放大 */
 }
 
 /* 编辑按钮 */
@@ -130,4 +147,8 @@ button.add:hover {
 
 .food-table th {
     color: #f2f2f2; /* 表头背景色 */
+}
+
+.food-table td:first-child {
+    font-weight: bold; /* 加粗文本 */
 }
