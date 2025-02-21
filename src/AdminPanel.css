@@ -194,3 +194,27 @@
         margin: 0 1px;
     }
 }
+.home-button,
+.logout-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px; /* Adjust the spacing as needed */
+  padding: 8px 12px;
+  background: none;
+  color: #00aaff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  text-decoration: none; /* Remove underline */
+  font-size: large;
+  margin-left: 5px;
+  margin-right: 5px;
+}
+
+.home-button:hover,
+.logout-button:hover {
+  background-color: #00aaff;
+  color: white;
+  transform: none;
+}

@@ -129,29 +129,6 @@
     /* 使用 CarbCalculator 的变量 */
 }
 
-/* 查询按钮的样式 */
-.calculate-button {
-    /* 可以添加一些样式，例如 padding, background-color 等 */
-    /* 这里添加了更大的内边距和突出的背景颜色 */
-    padding: 0.5rem 1rem;
-    border: none;
-    border-radius: 12px;
-    background-color: var(--secondary-color);
-    color: var(--table-header-text-color);
-    cursor: pointer;
-    font-size: 1rem;
-    font-weight: 600;
-    transition: transform 0.2s ease, box-shadow 0.2s ease;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    margin-left: 10px;
-    /* 调整按钮与输入框的间距 */
-}
-
-.calculate-button:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.15);
-}
-
 /* 移动端样式 */
 @media (max-width: 768px) {
 
@@ -173,4 +150,33 @@
         /* 调整按钮与输入框的间距 */
         width: 100%;
     }
+}
+
+/* FoodSearchInput.css */
+.food-search-input-wrapper {
+    display: flex;
+    align-items: center;
+    margin-bottom: 1rem;
+    position: relative;
+    width: 100%; /* 宽度设置为100% */
+}
+
+.food-search-input {
+    flex-grow: 1;
+    padding: 0.5rem;
+    border: 2px solid var(--border-color);
+    border-radius: 8px;
+    background-color: var(--card-background-color);
+    color: var(--text-color);
+    font-size: 1rem;
+    transition: border-color 0.3s ease;
+    /* 宽度设置 100%，并且减去清除按钮占据的位置 */
+    width: calc(100% - 2rem);
+    /* 确保输入框占据剩余空间 */
+}
+
+.food-search-input:focus {
+    border-color: var(--primary-color);
+    outline: none;
+    box-shadow: 0 0 0 2px rgba(41, 121, 255, 0.2);
 }

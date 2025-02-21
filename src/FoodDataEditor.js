@@ -1,4 +1,5 @@
 import React, { useState, useMemo, useCallback, useEffect } from 'react';
+import * as XLSX from 'xlsx'; // 引入 xlsx
 import './FoodTable.css';
 import './FoodDataEditor.css';
 
@@ -339,6 +340,13 @@ function FoodDataEditor() {
             setLoading(false); // 结束加载
         }
     };
+    // 导出数据到 XLSX 文件
+    const handleExport = () => {
+        const wb = XLSX.utils.book_new();
+        const ws = XLSX.utils.json_to_sheet(foodData);
+        XLSX.utils.book_append_sheet(wb, ws, "FoodData");
+        XLSX.writeFile(wb, "FoodData.xlsx");
+    };
 
     // 使用键盘上的 Esc 键关闭模态框
     useEffect(() => {
@@ -399,8 +407,14 @@ function FoodDataEditor() {
                     脂肪
                 </button>
             </div>
-            <p className="table-description">所有数值为100g该食材的元素含量(g)，点击表头可以<strong style={{ color: 'orange' }}>切换排序方式</strong></p>
-            <button className="add" onClick={handleOpenAddModal}>添加食材</button>
+            <div className="toolbar">
+                <button className="add" onClick={handleOpenAddModal}>添加食材</button>
+                <div className="import-export">
+                   
+                    <button className="export" onClick={handleExport}>导出备份</button>
+                    
+                </div>
+            </div>
             <table className="food-table">
                 <thead>
                     <tr className="header-row">
@@ -487,12 +501,12 @@ function FoodDataEditor() {
                             value={editFormData.fat}
                             onChange={handleEditFormChange}
                         />
-                         <div className="buttons">
+                        <div className="buttons">
                             <button className="edit" onClick={handleUpdateFood} disabled={loading}>
                                 {loading ? '修改中...' : '修改'}
                             </button>
                         </div>
-                         {loading && <div className="loading-spinner"></div>}
+                        {loading && <div className="loading-spinner"></div>}
                     </div>
                 </div>
             )}
@@ -556,16 +570,18 @@ function FoodDataEditor() {
                             value={addFormData.fat}
                             onChange={handleAddFormChange}
                         />
-                         <div className="buttons">
+                        <div className="buttons">
                             <button className="add" onClick={handleAddFood} disabled={loading}>
                                 {loading ? '添加中...' : '添加'}
                             </button>
                             <button className="delete" onClick={handleCloseAddModal} disabled={loading}>关闭</button>
                         </div>
-                         {loading && <div className="loading-spinner"></div>}
+                        {loading && <div className="loading-spinner"></div>}
                     </div>
                 </div>
             )}
+
+           
         </div>
     );
 }

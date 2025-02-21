@@ -5,6 +5,9 @@ import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import 'react-tabs/style/react-tabs.css';
 import './AdminPanel.css';
 import FoodDataEditor from './FoodDataEditor';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faArrowLeft, faSignOutAlt } from '@fortawesome/free-solid-svg-icons';
+import '@fortawesome/fontawesome-free/css/all.min.css';
 
 function AdminPanel() {
     const navigate = useNavigate();
@@ -48,8 +51,8 @@ function AdminPanel() {
         return (
             <div className="admin-panel">
                 <header className="admin-header">
-                    <Link to="/" className="home-button">
-                        返回
+                <Link to="/" className="home-button">
+                    <FontAwesomeIcon icon={faArrowLeft} />
                     </Link>
                     <h1>管理面板登录</h1>
                 </header>
@@ -75,11 +78,11 @@ function AdminPanel() {
             <header className="admin-header">
                 <div className="header-container">
                     <Link to="/" className="home-button">
-                        返回
+                    <FontAwesomeIcon icon={faArrowLeft} />
                     </Link>
                     <h1 className="header-title">管理面板</h1>
                     <button onClick={handleLogout} className="logout-button">
-                        退出
+                    <FontAwesomeIcon icon={faSignOutAlt} />
                     </button>
                 </div>
             </header>
