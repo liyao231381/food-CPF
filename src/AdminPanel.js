@@ -48,6 +48,9 @@ function AdminPanel() {
         return (
             <div className="admin-panel">
                 <header className="admin-header">
+                    <Link to="/" className="home-button">
+                        返回
+                    </Link>
                     <h1>管理面板登录</h1>
                 </header>
                 <main className="admin-main">

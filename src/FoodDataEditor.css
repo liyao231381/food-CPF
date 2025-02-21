@@ -127,3 +127,7 @@ button.add:hover {
         opacity: 1; /* 渐变为不透明 */
     }
 }
+
+.food-table th {
+    color: #f2f2f2; /* 表头背景色 */
+}

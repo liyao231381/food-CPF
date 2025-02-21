@@ -11,6 +11,8 @@ import './App.css';
 // 创建一个全局的 context 来共享 foodData
 export const FoodDataContext = React.createContext(null);
 
+const cacheDuration = 24 * 60 * 60 * 1000; // 缓存有效期：24 小时 (毫秒)
+
 function App() {
     const [foodData, setFoodData] = useState(null);
     const [isLoading, setIsLoading] = useState(true);
@@ -25,8 +27,8 @@ function App() {
                     throw new Error(`HTTP error! status: ${response.status}`);
                 }
                 const data = await response.json();
-                // 缓存到 localStorage
                 localStorage.setItem('foodData', JSON.stringify(data));
+                localStorage.setItem('foodDataTimestamp', Date.now().toString()); // 存储时间戳
                 setFoodData(data);
             } catch (error) {
                 setError(error);
@@ -36,21 +38,38 @@ function App() {
             }
         };
 
-        // 尝试从 localStorage 中获取数据
-        const storedData = localStorage.getItem('foodData');
-        if (storedData) {
-            try {
-                setFoodData(JSON.parse(storedData));
-                setIsLoading(false); // 即使从缓存加载，也设置 isLoading 为 false
-            } catch (parseError) {
-                console.error("Could not parse stored food data:", parseError);
-                // 如果解析失败，重新从 API 获取数据
-                fetchFoodData();
+        const loadDataFromCache = () => {
+            const storedData = localStorage.getItem('foodData');
+            const storedTimestamp = localStorage.getItem('foodDataTimestamp');
+
+            if (storedData && storedTimestamp) {
+                const timestamp = parseInt(storedTimestamp, 10);
+                const now = Date.now();
+
+                if (now - timestamp < cacheDuration) {
+                    // 缓存未过期，从缓存加载
+                    try {
+                        setFoodData(JSON.parse(storedData));
+                        setIsLoading(false); // 从缓存加载后立即结束加载状态
+                        console.log("Data loaded from cache."); // 可选：添加日志，方便调试
+                        return true; // 表示成功从缓存加载
+                    } catch (parseError) {
+                        console.error("Could not parse stored food data:", parseError);
+                        return false; // 缓存解析失败
+                    }
+                } else {
+                    // 缓存已过期
+                    console.log("Cache expired, fetching new data from API."); // 可选：添加日志
+                    return false; // 缓存过期，需要从 API 获取
+                }
             }
-        } else {
-            // 如果 localStorage 中没有数据，则从 API 获取数据
+            return false; // 没有缓存数据或时间戳
+        };
+
+        if (!loadDataFromCache()) { // 如果没有有效缓存，则从 API 获取
             fetchFoodData();
         }
+
     }, []);
 
     return (

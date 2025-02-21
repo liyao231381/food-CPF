@@ -15,9 +15,8 @@
     /* 更柔和的背景色 */
     /*min-height: 100vh;*/
     display: flex;
-    flex-direction: column;
     align-items: center;
-    justify-content: flex-start;
+    justify-content: center;
     font-size: calc(8px + 1vmin);
     /* 减小字体大小 */
     color: #333;
