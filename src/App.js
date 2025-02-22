@@ -6,6 +6,7 @@ import 'react-tabs/style/react-tabs.css';
 import CarbCalculator from './CarbCalculator';
 import FoodWeightCalculator from './FoodWeightCalculator';
 import FoodTable from './FoodTable'; // 引入食材成分表组件
+import BMRCalculator from './BMRCalculator'; // 引入基础代谢率计算器组件
 import './App.css';
 import { Analytics } from '@vercel/analytics/react';
 
@@ -120,9 +121,7 @@ function App() {
                                 <FoodTable />
                             </TabPanel>
                             <TabPanel>
-                                <p>更多功能正在开发中...</p>
-                                <p>敬请期待！</p>
-                                <p>欢迎提出宝贵意见！</p>
+                                <BMRCalculator />
                             </TabPanel>
                         </Tabs>
                     </FoodDataContext.Provider>

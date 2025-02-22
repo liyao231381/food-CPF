@@ -1,0 +1,198 @@
+/* BMRCalculator.css */
+
+/* 颜色变量，方便统一修改主题色 */
+:root {
+    --primary-color: #2979FF;
+    --secondary-color: #4CAF50;
+    --accent-color: #FF9800;
+    --background-color: #f5f7fb;
+    --card-background-color: #fff;
+    --text-color: #333;
+    --light-text-color: #777;
+    --border-color: #e0e0e0;
+    --table-header-background: var(--primary-color);
+    --table-header-text-color: #000000;
+    --table-row-even-background: #f8f8f8;
+    --table-row-hover-background: #f0f0f0;
+}
+
+.input-group {
+    margin-bottom: 15px;
+}
+
+.input-row {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.input-row label {
+    flex: 0 0 120px;
+    margin-right: 10px;
+}
+
+.input-row input,
+.input-row select {
+    flex: 1;
+    padding: 0px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+@media (max-width: 768px) {
+    .input-row {
+        flex-direction: row;
+        align-items: center;
+    }
+
+    .input-row label {
+        margin-bottom: 5px;
+        margin-right: 0;
+        width: auto;
+    }
+
+    .input-row input,
+    .input-row select {
+        width: 100%;
+    }
+}
+
+.result {
+    margin-top: 20px;
+    font-weight: bold;
+}
+
+.gender-select {
+    display: flex;
+    align-items: center;
+}
+
+.gender-icon {
+    font-size: 2em;
+    margin-right: 20px;
+    cursor: pointer;
+    transition: color 0.3s ease;
+}
+
+/* 男性图标默认颜色 */
+.fa-male {
+    color: #ADD8E6;
+}
+
+/* 女性图标默认颜色 */
+.fa-female {
+    color: #FFB6C1;
+}
+
+/* 鼠标悬停时的颜色 */
+.gender-icon:hover {
+    color: #333;
+}
+
+/* 男性图标选中时的颜色 */
+.fa-male.active {
+    color: #007bff;
+}
+
+/* 女性图标选中时的颜色 */
+.fa-female.active {
+    color: #FF69B4;
+}
+
+/* 滑块样式 */
+.input-row input[type="range"] {
+    cursor: pointer;
+    -webkit-appearance: none;
+    appearance: none;
+    height: 18px;
+    background: repeating-linear-gradient(to right, #ddd 0, #ddd 5px, transparent 5px, transparent 10px);
+    border-radius: 12px;
+    width: 100%; /* 确保滑块占据可用空间 */
+}
+
+.input-row input[type="range"]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    background-color: var(--primary-color);
+    cursor: pointer;
+    border: 2px solid var(--card-background-color);
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.25);
+    transition: transform 0.2s ease;
+}
+
+.input-row input[type="range"]::-webkit-slider-thumb:hover {
+    transform: scale(1.1);
+}
+
+.input-row input[type="range"]::-webkit-slider-runnable-track {
+    height: 18px;
+    border-radius: 12px;
+    background: linear-gradient(to right, rgb(119, 255, 124), rgb(129, 198, 255), rgb(255, 105, 105), rgb(255, 153, 0) var(--progress), transparent var(--progress));
+}
+
+/* Firefox 滑块 thumb 样式 */
+.input-row input[type="range"]::-moz-range-thumb {
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    background-color: var(--primary-color);
+    cursor: pointer;
+    border: 3px solid var(--card-background-color);
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.25);
+    transition: transform 0.2s ease;
+}
+
+.input-row input[type="range"]::-moz-range-thumb:hover {
+    transform: scale(1.1);
+}
+
+/* Firefox 滑块 track 样式 */
+.input-row input[type="range"]::-moz-range-track {
+    height: 18px;
+    border-radius: 12px;
+    background: repeating-linear-gradient(to right, #ddd 0, #ddd 5px, transparent 5px, transparent 10px);
+}
+
+/* 添加活动水平标签的样式 */
+.activity-level-label {
+    min-width: 120px; /* 保持与其它标签一致的最小宽度 */
+    margin-right: 10px;
+}
+
+#activityLevelValue {
+    min-width: 80px;
+    text-align: center;
+    font-weight: 600;
+    color: var(--primary-color);
+    font-size: 1rem;
+}
+
+/* 修改体质类型与训练强度 */
+.input-row:not(:first-child) {
+    display: flex;
+    /* 使用 Flexbox 布局 */
+    align-items: center;
+    /* 垂直居中对齐 */
+}
+
+.input-row:not(:first-child) label {
+    flex: 1;
+    /* label 占据一份 */
+    text-align: left;
+}
+
+.input-row:not(:first-child) .value-display {
+    flex: 1;
+    /* value 占据一份 */
+    text-align: center;
+    /* 文本居中 */
+}
+
+.input-row:not(:first-child) .range-container {
+    flex: 3;
+    /* 滑块占据三份 */
+    width: auto;
+}
