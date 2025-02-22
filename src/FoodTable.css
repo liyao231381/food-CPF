@@ -56,10 +56,11 @@
 }
 
 .table-description {
-    font-size: 0.9rem;
-    color: var(--light-text-color);
+    font-size: 0.8rem;
+    color: gray;
     text-align: left;
     margin-bottom: 0.5rem;
+    font-weight: 100;
     font-style: italic;
 }
 
@@ -123,7 +124,6 @@
 .food-search-input {
     width: 100%;
     padding: 8px;
-    margin-bottom: 8px;
     border: 1px solid #ccc;
     border-radius: 4px;
     box-sizing: border-box;

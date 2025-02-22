@@ -125,6 +125,7 @@ function FoodTable() {
                     </button>
                 )}
             </div>
+            <p style={{ fontWeight: 'bold', color: 'orange' }}>内容不够完善，需要增加什么食物，请用力滴滴我</p>
             <div className="tab-buttons">
                 <button
                     className={`tab-button ${activeTab === 'carbon' ? 'active' : ''}`}

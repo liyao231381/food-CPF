@@ -104,10 +104,10 @@ function App() {
                                     💪碳循环饮食
                                 </Tab>
                                 <Tab>
-                                    🥦食材成分
+                                    🔥代谢计算
                                 </Tab>
                                 <Tab>
-                                    更多功能
+                                    🥦食材成分
                                 </Tab>
                             </TabList>
 
@@ -118,10 +118,10 @@ function App() {
                                 <CarbCalculator />
                             </TabPanel>
                             <TabPanel>
-                                <FoodTable />
+                                <BMRCalculator />
                             </TabPanel>
                             <TabPanel>
-                                <BMRCalculator />
+                                <FoodTable />
                             </TabPanel>
                         </Tabs>
                     </FoodDataContext.Provider>

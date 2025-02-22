@@ -136,6 +136,7 @@ const FoodWeightCalculator = () => {
     return (
         <>
             <div className="input-all">
+            <p style={{ fontWeight: 'bold', color: 'orange' }}>内容不够完善，需要增加什么食物，请用力滴滴我</p>
                 <div className="input-area">
                     <label htmlFor="foodType">选择食材类型:</label>
                     <select id="foodType" value={foodType} onChange={e => { setFoodType(e.target.value); calculateWeight() }}>
