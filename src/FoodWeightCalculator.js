@@ -6,7 +6,7 @@ import { FoodDataContext } from './App'; // 引入 FoodDataContext
 
 const FoodWeightCalculator = () => {
     const foodData = useContext(FoodDataContext); // 使用 useContext 获取 foodData
-    const [nutrientAmount, setNutrientAmount] = useState(50);
+    const [nutrientAmount, setNutrientAmount] = useState(35);
     const [foodType, setFoodType] = useState('carbon');
     const [results, setResults] = useState([]);
     const [isEditModalOpen, setIsEditModalOpen] = useState(false);
@@ -135,8 +135,8 @@ const FoodWeightCalculator = () => {
 
     return (
         <>
-            <div className="input-all">
             <p style={{ fontWeight: 'bold', color: 'orange' }}>内容不够完善，需要增加什么食物，请用力滴滴我</p>
+            <div className="input-all">
                 <div className="input-area">
                     <label htmlFor="foodType">选择食材类型:</label>
                     <select id="foodType" value={foodType} onChange={e => { setFoodType(e.target.value); calculateWeight() }}>
