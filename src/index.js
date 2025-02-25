@@ -1,4 +1,3 @@
-// index.js
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
@@ -17,3 +16,10 @@ root.render(
     </BrowserRouter>
   </React.StrictMode>
 );
+
+// 注册 service worker
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('/service-worker.js');
+  });
+}
