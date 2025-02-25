@@ -24,4 +24,5 @@ yarn-debug.log*
 yarn-error.log*
 
 seed.js
+same.js
 .vercel
