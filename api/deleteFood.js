@@ -9,19 +9,19 @@ const pool = new Pool({
 
 module.exports = async (req, res) => {
     if (req.method === 'POST') {
-        const { foodname } = req.body;
+        const { foodname, id } = req.body; // 添加 id
 
         // 数据验证
-        if (!foodname) {
-            return res.status(400).json({ error: '必须提供食材名称' });
+        if (!foodname || !id) { // 检查 id
+            return res.status(400).json({ error: '必须提供食材名称和 ID' });
         }
 
         try {
             const client = await pool.connect();
 
-            // 检查是否存在具有给定名称的食物
-            const checkQuery = 'SELECT * FROM food WHERE foodname = $1';
-            const checkValues = [foodname];
+            // 检查是否存在具有给定名称和 ID 的食物
+            const checkQuery = 'SELECT * FROM food WHERE foodname = $1 AND id = $2'; // 修改查询
+            const checkValues = [foodname, id]; // 添加 id
             const checkResult = await client.query(checkQuery, checkValues);
 
             if (checkResult.rows.length === 0) {
@@ -32,9 +32,9 @@ module.exports = async (req, res) => {
             // 如果存在，则删除食物的数据
             const query = `
                 DELETE FROM food
-                WHERE foodname = $1
+                WHERE foodname = $1 AND id = $2
             `;
-            const values = [foodname];
+            const values = [foodname, id]; // 添加 id
 
             await client.query(query, values);
 
@@ -48,3 +48,4 @@ module.exports = async (req, res) => {
         res.status(405).json({ error: '方法不允许' });
     }
 };
+

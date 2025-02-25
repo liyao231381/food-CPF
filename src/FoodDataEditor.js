@@ -1,14 +1,13 @@
 import React, { useState, useMemo, useCallback, useEffect } from 'react';
 import * as XLSX from 'xlsx'; // 引入 xlsx
+import { pinyin } from 'pinyin-pro'; // 引入 pinyin-pro
 import './FoodTable.css';
 import './FoodDataEditor.css';
 
 function FoodDataEditor() {
     const [foodData, setFoodData] = useState([]);
-    // eslint-disable-next-line no-unused-vars
-    const [isLoading, setIsLoading] = useState(true);
-    // eslint-disable-next-line no-unused-vars
-    const [error, setError] = useState(null);
+    const [isLoading, setIsLoading] = useState(true); // 用于显示加载状态
+    const [error, setError] = useState(null);       // 用于显示错误信息
     const [sortConfig, setSortConfig] = useState({ key: null, direction: 'ascending' });
     const [activeTab, setActiveTab] = useState('carbon');
     const [searchTerm, setSearchTerm] = useState('');
@@ -32,7 +31,6 @@ function FoodDataEditor() {
         fat: '',
     });
 
-    // 添加加载状态
     const [loading, setLoading] = useState(false);
 
     const searchedList = useMemo(() => {
@@ -61,7 +59,8 @@ function FoodDataEditor() {
 
     useEffect(() => {
         const fetchFoodData = async () => {
-            setIsLoading(true);
+            setIsLoading(true); // 开始加载时设置为 true
+            setError(null);     // 清空之前的错误信息
             try {
                 const response = await fetch('/api/foodData');
                 if (!response.ok) {
@@ -70,9 +69,9 @@ function FoodDataEditor() {
                 const data = await response.json();
                 setFoodData(data);
             } catch (error) {
-                setError(error);
+                setError(error); // 发生错误时设置错误信息
             } finally {
-                setIsLoading(false);
+                setIsLoading(false); // 加载完成后设置为 false
             }
         };
 
@@ -91,8 +90,10 @@ function FoodDataEditor() {
             return [...typeFilteredList].sort((a, b) => {
                 let valueA, valueB;
                 if (sortConfig.key === 'foodname') {
-                    valueA = a.foodname.toUpperCase();
-                    valueB = b.foodname.toUpperCase();
+                    const pinYinA = pinyin(a.foodname, { toneType: 'none', type: 'first' });
+                    const pinYinB = pinyin(b.foodname, { toneType: 'none', type: 'first' });
+                    valueA = pinYinA[0].toUpperCase(); // 获取首个汉字的拼音首字母
+                    valueB = pinYinB[0].toUpperCase(); // 获取首个汉字的拼音首字母
                 } else {
                     valueA = parseFloat(a[sortConfig.key] || 0);
                     valueB = parseFloat(b[sortConfig.key] || 0);
@@ -166,11 +167,11 @@ function FoodDataEditor() {
         setSelectedFood(null);
     }, []);
 
-    const handleOpenAddModal = () => { // 新增：打开添加模态框
+    const handleOpenAddModal = () => {
         setAddModalOpen(true);
     };
 
-    const handleCloseAddModal = useCallback(() => { // 新增：关闭添加模态框
+    const handleCloseAddModal = useCallback(() => {
         setAddModalOpen(false);
         setAddFormData({
             foodname: '',
@@ -179,12 +180,6 @@ function FoodDataEditor() {
             protein: '',
             fat: '',
         });
-    }, []);
-    // eslint-disable-next-line no-unused-vars
-    const handleModalClick = useCallback((e, closeModal) => {
-        if (e.target === e.currentTarget) {
-            closeModal();
-        }
     }, []);
 
     const handleEditFormChange = (e) => {
@@ -195,7 +190,7 @@ function FoodDataEditor() {
         });
     };
 
-    const handleAddFormChange = (e) => { // 新增：处理添加表单数据变化
+    const handleAddFormChange = (e) => {
         const { name, value } = e.target;
         setAddFormData({
             ...addFormData,
@@ -209,7 +204,8 @@ function FoodDataEditor() {
             return;
         }
 
-        setLoading(true); // 开始加载
+        setLoading(true);
+        setError(null); // 清空之前的错误信息
 
         try {
             const response = await fetch('/api/editFood', {
@@ -228,6 +224,7 @@ function FoodDataEditor() {
             if (data.message === '食材已成功修改!') {
                 const fetchFoodData = async () => {
                     setIsLoading(true);
+                    setError(null); // 清空之前的错误信息
                     try {
                         const response = await fetch('/api/foodData');
                         if (!response.ok) {
@@ -247,25 +244,29 @@ function FoodDataEditor() {
         } catch (error) {
             setError(error);
         } finally {
-            setLoading(false); // 结束加载
+            setLoading(false);
         }
     };
 
     const handleDeleteFood = async () => {
-        if (!selectedFood || !selectedFood.foodname) {
-            console.error('selectedFood 或 selectedFood.foodname 为空');
+        if (!selectedFood || !selectedFood.foodname || !selectedFood.id) {
+            console.error('selectedFood 或 selectedFood.foodname 或 selectedFood.id 为空');
             return;
         }
 
-        setLoading(true); // 开始加载
+        setLoading(true);
+        setError(null); // 清空之前的错误信息
 
         try {
-            const response = await fetch('/api/deleteFood', { // 修改为 /api/deleteFood
-                method: 'POST', // 修改为 POST 方法
+            const response = await fetch('/api/deleteFood', {
+                method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify({ foodname: selectedFood.foodname }), // 发送包含 foodname 的对象
+                body: JSON.stringify({
+                    foodname: selectedFood.foodname,
+                    id: selectedFood.id
+                }),
             });
 
             if (!response.ok) {
@@ -276,6 +277,7 @@ function FoodDataEditor() {
             if (data.message === '食材已成功删除!') {
                 const fetchFoodData = async () => {
                     setIsLoading(true);
+                    setError(null); // 清空之前的错误信息
                     try {
                         const response = await fetch('/api/foodData');
                         if (!response.ok) {
@@ -295,12 +297,13 @@ function FoodDataEditor() {
         } catch (error) {
             setError(error);
         } finally {
-            setLoading(false); // 结束加载
+            setLoading(false);
         }
     };
 
-    const handleAddFood = async () => { // 新增：处理添加食材
-        setLoading(true); // 开始加载
+    const handleAddFood = async () => {
+        setLoading(true);
+        setError(null); // 清空之前的错误信息
         try {
             const response = await fetch('/api/addFood', {
                 method: 'POST',
@@ -318,6 +321,7 @@ function FoodDataEditor() {
             if (data.message === '食材已成功添加!') {
                 const fetchFoodData = async () => {
                     setIsLoading(true);
+                    setError(null); // 清空之前的错误信息
                     try {
                         const response = await fetch('/api/foodData');
                         if (!response.ok) {
@@ -337,9 +341,10 @@ function FoodDataEditor() {
         } catch (error) {
             setError(error);
         } finally {
-            setLoading(false); // 结束加载
+            setLoading(false);
         }
     };
+
     // 导出数据到 XLSX 文件
     const handleExport = () => {
         const wb = XLSX.utils.book_new();
@@ -410,56 +415,72 @@ function FoodDataEditor() {
             <div className="toolbar">
                 <button className="add" onClick={handleOpenAddModal}>添加食材</button>
                 <div className="import-export">
-                   
                     <button className="export" onClick={handleExport}>导出备份</button>
-                    
                 </div>
             </div>
-            <table className="food-table">
-                <thead>
-                    <tr className="header-row">
-                        <th>
-                            <button type="button" onClick={resetSort}>
-                                食材
-                            </button>
-                        </th>
-                        <th>
-                            <button type="button" onClick={() => requestSort('carbon')}>
-                                碳水
-                            </button>
-                        </th>
-                        <th>
-                            <button type="button" onClick={() => requestSort('protein')}>
-                                蛋白质
-                            </button>
-                        </th>
-                        <th>
-                            <button type="button" onClick={() => requestSort('fat')}>
-                                脂肪
-                            </button>
-                        </th>
-                        <th>管理</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {sortedList.map((food) => (
-                        <tr key={food.id}>
-                            <td>{food.foodname}</td>
-                            <td>{food.carbon}</td>
-                            <td>{food.protein}</td>
-                            <td>{food.fat}</td>
-                            <td>
-                                <button className="edit" onClick={() => handleOpenEditModal(food)}>编辑</button>
-                                <button className="delete" onClick={() => handleOpenDeleteModal(food)}>删除</button>
-                            </td>
+
+            {/* 加载指示器 */}
+            {isLoading && (
+                <div className="loading-indicator">
+                    数据加载中...
+                </div>
+            )}
+
+            {/* 错误信息 */}
+            {error && (
+                <div className="error-message">
+                    发生错误: {error.message}
+                </div>
+            )}
+
+            {/* 数据表格 */}
+            {!isLoading && !error && (
+                <table className="food-table">
+                    <thead>
+                        <tr className="header-row">
+                            <th>
+                                <button type="button" onClick={() => requestSort('foodname')}>
+                                    食材
+                                </button>
+                            </th>
+                            <th>
+                                <button type="button" onClick={() => requestSort('carbon')}>
+                                    碳水
+                                </button>
+                            </th>
+                            <th>
+                                <button type="button" onClick={() => requestSort('protein')}>
+                                    蛋白质
+                                </button>
+                            </th>
+                            <th>
+                                <button type="button" onClick={() => requestSort('fat')}>
+                                    脂肪
+                                </button>
+                            </th>
+                            <th>管理</th>
                         </tr>
-                    ))}
-                </tbody>
-            </table>
+                    </thead>
+                    <tbody>
+                        {sortedList.map((food) => (
+                            <tr key={food.id}>
+                                <td>{food.foodname}</td>
+                                <td>{food.carbon}</td>
+                                <td>{food.protein}</td>
+                                <td>{food.fat}</td>
+                                <td>
+                                    <button className="edit" onClick={() => handleOpenEditModal(food)}>编辑</button>
+                                    <button className="delete" onClick={() => handleOpenDeleteModal(food)}>删除</button>
+                                </td>
+                            </tr>
+                        ))}
+                    </tbody>
+                </table>
+            )}
 
             {/* 编辑模态框 */}
             {editModalOpen && (
-                <div className="modal" >
+                <div className="modal">
                     <div className="modal-content">
                         <span className="close" onClick={handleCloseEditModal}>&times;</span>
                         <h2>编辑食材</h2>
@@ -513,7 +534,7 @@ function FoodDataEditor() {
 
             {/* 删除确认模态框 */}
             {deleteModalOpen && (
-                <div className="modal" >
+                <div className="modal">
                     <div className="modal-content">
                         <h3>确定要删除 {selectedFood.foodname} 吗?</h3>
                         <div className="buttons">
@@ -529,7 +550,7 @@ function FoodDataEditor() {
 
             {/* 添加模态框 */}
             {addModalOpen && (
-                <div className="modal" >
+                <div className="modal">
                     <div className="modal-content">
                         <h2>添加食材</h2>
                         <label>食材名称:</label>
@@ -580,8 +601,6 @@ function FoodDataEditor() {
                     </div>
                 </div>
             )}
-
-           
         </div>
     );
 }

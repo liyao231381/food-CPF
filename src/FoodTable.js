@@ -2,6 +2,7 @@
 import React, { useState, useContext, useMemo, useCallback, useEffect } from 'react';
 import './FoodTable.css';
 import { FoodDataContext } from './App'; // 引入 FoodDataContext
+import { pinyin } from 'pinyin-pro'; // 正确导入 pinyin 函数
 
 function FoodTable() {
     const foodData = useContext(FoodDataContext); // 使用 useContext 获取 foodData
@@ -57,17 +58,18 @@ function FoodTable() {
             return [...typeFilteredList].sort((a, b) => {
                 let valueA, valueB;
                 if (sortConfig.key === 'foodname') {
-                    valueA = a.foodname.toUpperCase();
-                    valueB = b.foodname.toUpperCase();
+                    // 获取食材名称的首个汉字的拼音首字母
+                    const pinYinA = pinyin(a.foodname, { toneType: 'none', type: 'first' });
+                    const pinYinB = pinyin(b.foodname, { toneType: 'none', type: 'first' });
+                    valueA = pinYinA[0].toUpperCase(); // 获取首个汉字的拼音首字母
+                    valueB = pinYinB[0].toUpperCase(); // 获取首个汉字的拼音首字母
                 } else if (sortConfig.key === 'calories') {
                     valueA = calculateCalories(a);
                     valueB = calculateCalories(b);
-                }
-                else {
+                } else {
                     valueA = parseFloat(a[sortConfig.key] || 0);
                     valueB = parseFloat(b[sortConfig.key] || 0);
                 }
-
 
                 if (valueA < valueB) {
                     return sortConfig.direction === 'ascending' ? -1 : 1;
@@ -147,15 +149,11 @@ function FoodTable() {
                 </button>
             </div>
             <p className="table-description">所有数值为100g该食材的元素含量(g)，点击表头可以<strong style={{ color: 'orange' }}>切换排序方式</strong></p>
-            {/* 将 isLoading 判断移除，因为数据从 context 获取 */}
-            {/* {isLoading ? (
-                <p>加载中...</p>
-            ) : ( */}
             <table className="food-table">
                 <thead>
                     <tr className="header-row">
                         <th>
-                            <button type="button" onClick={resetSort}>
+                            <button type="button" onClick={() => requestSort('foodname')}>
                                 食材
                             </button>
                         </th>
@@ -193,7 +191,6 @@ function FoodTable() {
                     ))}
                 </tbody>
             </table>
-            {/* )} */}
         </div>
     );
 }
